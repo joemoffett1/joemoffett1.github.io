@@ -12,7 +12,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Cardo", serif;
-  background: radial-gradient(circle at 30% 20%, #eaf5ff 0%, #b7d8f2 35%, #fbe49c 90%);
+  background: radial-gradient(circle at 40% 20%, #eaf5ff 0%, #b7d8f2 35%, #fbe49c 90%);
   color: #1b1d25;
   min-height: 100vh;
   display: flex;
@@ -22,46 +22,21 @@ body {
 }
 
 .card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(247,245,236,0.98));
+  position: relative;
+  background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(247,245,236,0.98));
   border: 4px solid #d8b552;
   border-radius: 20px;
   box-shadow: 0 0 25px rgba(27,102,170,0.45), inset 0 0 12px rgba(255,255,255,0.4);
-  width: 780px;
-  padding: 35px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 680px;
+  padding: 35px 40px 45px;
   text-align: center;
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 15px;
-}
-
-.left-controls {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  width: 50%;
-  gap: 14px;
-  padding-left: 10px;
-}
-
-.right-header {
-  text-align: left;
-  width: 50%;
 }
 
 h1 {
   font-family: "Uncial Antiqua", serif;
   color: #124e88;
   text-shadow: 0 0 8px rgba(28,105,175,0.5);
-  margin: 0;
+  margin: 10px 0 6px;
   font-size: 2.1em;
 }
 
@@ -69,40 +44,45 @@ h1 {
   font-style: italic;
   font-size: 1.05em;
   color: #725a2e;
-  margin-top: 6px;
-  margin-bottom: 8px;
+  margin-bottom: 20px;
 }
 
-.card-art {
+.card-art-top {
   display: block;
+  margin: 0 auto 10px;
   width: 110px;
   border-radius: 10px;
   border: 2px solid #d8b552;
-  box-shadow: 0 0 10px rgba(28,105,175,0.4);
-  margin-top: 6px;
+  box-shadow: 0 0 12px rgba(28,105,175,0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-art-top:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 18px rgba(255,221,130,0.8);
 }
 
 .slider-group {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
+  justify-content: center;
+  gap: 10px;
+  margin: 14px auto;
 }
 
 label {
-  width: 200px;
+  width: 230px;
   text-align: right;
   font-weight: 700;
   color: #2a1e13;
 }
 
 input[type="range"] {
-  width: 140px;
+  width: 160px;
   accent-color: #2f80ed;
 }
 
 input[type="number"] {
-  width: 60px;
+  width: 70px;
   padding: 4px;
   font-size: 1em;
   border-radius: 6px;
@@ -120,7 +100,7 @@ input[type="number"]:focus {
 
 #result {
   font-size: 1.7em;
-  margin-top: 20px;
+  margin-top: 26px;
   font-weight: bold;
   color: #0f4174;
   text-shadow: 0 0 6px rgba(67,132,185,0.4);
@@ -132,12 +112,10 @@ input[type="number"]:focus {
   margin-top: 30px;
   line-height: 1.6em;
   text-align: left;
-  background: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.75);
   border-radius: 10px;
   padding: 12px 14px;
-  box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 640px;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.08);
 }
 
 .explanation strong {
@@ -148,10 +126,8 @@ input[type="number"]:focus {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 6px;
+  gap: 8px;
   margin-top: 25px;
-  width: 100%;
-  max-width: 640px;
 }
 
 .art-row img {
@@ -178,32 +154,26 @@ footer {
 
 <body>
   <div class="card">
-    <div class="card-header">
-      <div class="left-controls">
-        <div class="slider-group">
-          <label for="H">🐇 Existing Hare Copies (H):</label>
-          <input id="H" type="range" min="0" max="20" value="2" oninput="syncInputs('H')">
-          <input id="Hnum" type="number" value="2" oninput="syncSliders('H')">
-        </div>
+    <img src="./Rabbit.jpg" alt="Rabbit Token" class="card-art-top">
+    <h1>Hare Apparent Offspring Rabbit Calculator</h1>
+    <p class="subtitle">So you cast a <strong>Hare Apparent</strong> paying its <em>Offspring</em> cost...</p>
 
-        <div class="slider-group">
-          <label for="T">✨ Token Doubler Power (T):</label>
-          <input id="T" type="range" min="0" max="10" value="1" oninput="syncInputs('T')">
-          <input id="Tnum" type="number" value="1" oninput="syncSliders('T')">
-        </div>
+    <div class="slider-group">
+      <label for="H">🐇 Existing Hare Copies (H):</label>
+      <input id="H" type="range" min="0" max="20" value="2" oninput="syncInputs('H')">
+      <input id="Hnum" type="number" value="2" oninput="syncSliders('H')">
+    </div>
 
-        <div class="slider-group">
-          <label for="A">🔁 Additional Trigger Count (A):</label>
-          <input id="A" type="range" min="0" max="10" value="1" oninput="syncInputs('A')">
-          <input id="Anum" type="number" value="1" oninput="syncSliders('A')">
-        </div>
-      </div>
+    <div class="slider-group">
+      <label for="T">✨ Token Doubler Power (T):</label>
+      <input id="T" type="range" min="0" max="10" value="1" oninput="syncInputs('T')">
+      <input id="Tnum" type="number" value="1" oninput="syncSliders('T')">
+    </div>
 
-      <div class="right-header">
-        <h1>Hare Apparent Offspring Rabbit Calculator</h1>
-        <p class="subtitle">So you cast a <strong>Hare Apparent</strong> paying its <em>Offspring</em> cost...</p>
-        <img src="./Rabbit.jpg" alt="Rabbit Token" class="card-art">
-      </div>
+    <div class="slider-group">
+      <label for="A">🔁 Additional Trigger Count (A):</label>
+      <input id="A" type="range" min="0" max="10" value="1" oninput="syncInputs('A')">
+      <input id="Anum" type="number" value="1" oninput="syncSliders('A')">
     </div>
 
     <div id="result">Rabbits created: —</div>
