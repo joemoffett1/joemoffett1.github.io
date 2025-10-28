@@ -1,2 +1,45 @@
-# joemoffett1.github.io
-Rabbit calculator for offspring
+# Rabbit calculator for offspring
+<!-- 🐇 Rabbit Calculator for Obsidian -->
+<div style="font-family:Inter, sans-serif; background:#f6f5f3; padding:1em; border-radius:10px; max-width:420px;">
+  <h3 style="margin-top:0;">🐇 Rabbit Calculator</h3>
+  <p>Use the sliders to change H, T, and A:</p>
+
+  <label>H: <input id="H" type="range" min="0" max="10" value="2" oninput="update()">
+  <span id="Hv">2</span></label><br>
+
+  <label>T: <input id="T" type="range" min="0" max="10" value="1" oninput="update()">
+  <span id="Tv">1</span></label><br>
+
+  <label>A: <input id="A" type="range" min="0" max="10" value="1" oninput="update()">
+  <span id="Av">1</span></label><br>
+
+  <div style="margin-top:1em; font-weight:bold; font-size:1.2em;">
+    Rabbits created: <span id="result">—</span>
+  </div>
+</div>
+
+<script>
+function X(H, T, A) {
+  let term1 = 0;
+  for (let n = 1; n <= A + 1; n++) {
+    term1 += (2 ** T) ** 2 * (H + 2 ** T * n) * (A + 1);
+  }
+  let term2 = (2 ** T) * (H + 2 ** T * (A + 1)) * (A + 1);
+  return term1 + term2;
+}
+
+function update() {
+  const H = parseInt(document.getElementById("H").value);
+  const T = parseInt(document.getElementById("T").value);
+  const A = parseInt(document.getElementById("A").value);
+
+  document.getElementById("Hv").textContent = H;
+  document.getElementById("Tv").textContent = T;
+  document.getElementById("Av").textContent = A;
+
+  const result = X(H, T, A);
+  document.getElementById("result").textContent = result.toLocaleString();
+}
+
+update();
+</script>
