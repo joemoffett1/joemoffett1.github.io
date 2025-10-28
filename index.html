@@ -12,40 +12,31 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Cardo", serif;
-  background: radial-gradient(circle at 30% 20%, #eaf5ff 0%, #b7d8f2 35%, #fbe49c 90%);
+  background: radial-gradient(circle at 40% 20%, #eaf5ff 0%, #b7d8f2 35%, #fbe49c 90%);
   color: #1b1d25;
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding: 40px 0;
 }
 
 .card {
   position: relative;
-  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(247,245,236,0.98));
+  background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(247,245,236,0.98));
   border: 4px solid #d8b552;
   border-radius: 20px;
   box-shadow: 0 0 25px rgba(27,102,170,0.45), inset 0 0 12px rgba(255,255,255,0.4);
-  width: 620px;
-  padding: 35px 35px 45px;
+  width: 680px;
+  padding: 35px 40px 45px;
   text-align: center;
-}
-
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  background: radial-gradient(circle at 80% 10%, rgba(59,135,190,0.35), rgba(249,199,98,0.25));
-  mix-blend-mode: overlay;
-  z-index: -1;
 }
 
 h1 {
   font-family: "Uncial Antiqua", serif;
   color: #124e88;
   text-shadow: 0 0 8px rgba(28,105,175,0.5);
-  margin-top: 0;
+  margin: 10px 0 6px;
   font-size: 2.1em;
 }
 
@@ -53,25 +44,29 @@ h1 {
   font-style: italic;
   font-size: 1.05em;
   color: #725a2e;
-  margin-top: 6px;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
-.card-art {
-  width: 130px;
+.card-art-top {
+  display: block;
+  margin: 0 auto 10px;
+  width: 110px;
   border-radius: 10px;
   border: 2px solid #d8b552;
-  box-shadow: 0 0 10px rgba(28,105,175,0.4);
-  float: right;
-  margin-left: 12px;
+  box-shadow: 0 0 12px rgba(28,105,175,0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-art-top:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 18px rgba(255,221,130,0.8);
 }
 
 .slider-group {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  margin: 16px auto;
+  gap: 10px;
+  margin: 14px auto;
 }
 
 label {
@@ -105,7 +100,7 @@ input[type="number"]:focus {
 
 #result {
   font-size: 1.7em;
-  margin-top: 28px;
+  margin-top: 26px;
   font-weight: bold;
   color: #0f4174;
   text-shadow: 0 0 6px rgba(67,132,185,0.4);
@@ -117,10 +112,10 @@ input[type="number"]:focus {
   margin-top: 30px;
   line-height: 1.6em;
   text-align: left;
-  background: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.75);
   border-radius: 10px;
   padding: 12px 14px;
-  box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.08);
 }
 
 .explanation strong {
@@ -131,7 +126,7 @@ input[type="number"]:focus {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 6px;
+  gap: 8px;
   margin-top: 25px;
 }
 
@@ -159,7 +154,6 @@ footer {
 
 <body>
   <div class="card">
-    <img src="./Rabbit.jpg" alt="Rabbit" class="card-art">
     <h1>Hare Apparent Offspring Rabbit Calculator</h1>
     <p class="subtitle">So you cast a <strong>Hare Apparent</strong> paying its <em>Offspring</em> cost...</p>
 
@@ -182,12 +176,14 @@ footer {
     </div>
 
     <div id="result">Rabbits created: —</div>
+        <img src="./Rabbit.jpg" alt="Rabbit Token" class="card-art-top">
+
 
     <div class="explanation">
       <p><strong>H</strong> — Number of other <em>Hare Apparents</em> already on the battlefield.</p>
-      <p><strong>T</strong> — Count of <em>token-doubling effects</em> such as <em>Doubling Season</em> or <em>Anointed Procession</em>.</p>
-      <p><strong>A</strong> — Number of <em>additional trigger</em> effects such as <em>Zinnia, Valley’s Voice</em> that make offspring abilities trigger multiple times.</p>
-      <p>The result shows how many 1/1 Rabbit tokens hop onto the battlefield when your newest Hare resolves.</p>
+      <p><strong>T</strong> — Count of <em>token-doubling effects</em> like <em>Doubling Season</em> or <em>Anointed Procession</em>.</p>
+      <p><strong>A</strong> — Number of <em>additional trigger</em> effects like <em>Zinnia, Valley’s Voice</em> that make the offspring ability fire extra times.</p>
+      <p>The result shows how many 1/1 Rabbit tokens spring into existence when your newest Hare resolves.</p>
     </div>
 
     <div class="art-row">
@@ -195,7 +191,7 @@ footer {
       <img src="./Hare.jpg" alt="Hare Apparent">
     </div>
 
-    <footer>“The valley sings, and every note finds an echo in fur and paw.”</footer>
+    <footer>““Why you getting mad at my 4 vampires you're about to make like 30 rabbits?” - Cody Rich right before he saw 300 rabbits”</footer>
   </div>
 
 <script>
@@ -240,3 +236,4 @@ update();
 </script>
 </body>
 </html>
+
