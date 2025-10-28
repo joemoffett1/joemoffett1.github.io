@@ -17,8 +17,7 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding-top: 40px;
+  align-items: center;
 }
 
 .card {
@@ -28,7 +27,8 @@ body {
   border-radius: 20px;
   box-shadow: 0 0 25px rgba(27,102,170,0.45), inset 0 0 12px rgba(255,255,255,0.4);
   width: 620px;
-  padding: 30px 35px 40px;
+  padding: 35px 35px 45px;
+  text-align: center;
 }
 
 .card::before {
@@ -58,7 +58,7 @@ h1 {
 }
 
 .card-art {
-  width: 120px;
+  width: 130px;
   border-radius: 10px;
   border: 2px solid #d8b552;
   box-shadow: 0 0 10px rgba(28,105,175,0.4);
@@ -103,29 +103,9 @@ input[type="number"]:focus {
   box-shadow: 0 0 8px rgba(69,150,230,0.6);
 }
 
-button {
-  margin-top: 20px;
-  background: linear-gradient(180deg, #58aef7, #1b5ea6);
-  border: none;
-  color: white;
-  padding: 10px 26px;
-  font-size: 1em;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  font-family: "Cardo", serif;
-  box-shadow: 0 0 10px rgba(45,128,210,0.6);
-  transition: 0.2s;
-}
-
-button:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 16px rgba(70,160,250,0.8);
-}
-
 #result {
-  font-size: 1.6em;
-  margin-top: 26px;
+  font-size: 1.7em;
+  margin-top: 28px;
   font-weight: bold;
   color: #0f4174;
   text-shadow: 0 0 6px rgba(67,132,185,0.4);
@@ -179,7 +159,7 @@ footer {
 
 <body>
   <div class="card">
-    <img src="./zinnia.jpg" alt="Zinnia, Valley's Voice" class="card-art">
+    <img src="./Rabbit.jpg" alt="Rabbit" class="card-art">
     <h1>Hare Apparent Offspring Rabbit Calculator</h1>
     <p class="subtitle">So you cast a <strong>Hare Apparent</strong> paying its <em>Offspring</em> cost...</p>
 
@@ -201,13 +181,12 @@ footer {
       <input id="Anum" type="number" value="1" oninput="syncSliders('A')">
     </div>
 
-    <button onclick="update()">✨ Calculate</button>
     <div id="result">Rabbits created: —</div>
 
     <div class="explanation">
       <p><strong>H</strong> — Number of other <em>Hare Apparents</em> already on the battlefield.</p>
-      <p><strong>T</strong> — Count of <em>token-doubling effects</em> like <em>Doubling Season</em> or <em>Anointed Procession</em>.</p>
-      <p><strong>A</strong> — Number of <em>additional trigger</em> effects like <em>Zinnia, Valley’s Voice</em> that make the offspring ability fire extra times.</p>
+      <p><strong>T</strong> — Count of <em>token-doubling effects</em> such as <em>Doubling Season</em> or <em>Anointed Procession</em>.</p>
+      <p><strong>A</strong> — Number of <em>additional trigger</em> effects such as <em>Zinnia, Valley’s Voice</em> that make offspring abilities trigger multiple times.</p>
       <p>The result shows how many 1/1 Rabbit tokens hop onto the battlefield when your newest Hare resolves.</p>
     </div>
 
