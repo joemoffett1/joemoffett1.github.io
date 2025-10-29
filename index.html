@@ -122,6 +122,34 @@ input[type="number"]:focus {
   color: #124e88;
 }
 
+#formula-block {
+  margin-top: 22px;
+  text-align: center;
+}
+
+mjx-container {
+  color: #0f4174;
+  text-shadow: 0 0 10px rgba(27,102,170,0.3);
+  font-size: 1.05em;
+  animation: formulaFade 1.5s ease-in-out;
+}
+
+@keyframes formulaFade {
+  0% { opacity: 0; filter: blur(3px); }
+  100% { opacity: 1; filter: blur(0); }
+}
+
+.formula-label {
+  text-align: center;
+  font-family: "Uncial Antiqua", serif;
+  color: #c79838;
+  text-shadow: 0 0 8px rgba(200,150,56,0.5);
+  margin-top: 20px;
+  margin-bottom: 4px;
+  font-size: 1.1em;
+  letter-spacing: 0.03em;
+}
+
 .art-row {
   display: flex;
   justify-content: space-between;
@@ -144,46 +172,68 @@ input[type="number"]:focus {
 }
 
 footer {
-  margin-top: 18px;
+  margin-top: 22px;
   font-size: 0.9em;
-  color: #563f1e;
+  color: #5b4321;
   font-style: italic;
+  text-align: center;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
 </head>
 
 <body>
   <div class="card">
+
     <h1>Hare Apparent Offspring Rabbit Calculator</h1>
     <p class="subtitle">So you cast a <strong>Hare Apparent</strong> paying its <em>Offspring</em> cost...</p>
 
     <div class="slider-group">
-      <label for="H">Existing Hare Copies (H):</label>
-      <input id="H" type="range" min="0" max="20" value="0" oninput="syncInputs('H')">
-      <input id="Hnum" type="number" value="0" oninput="syncSliders('H')">
+      <label for="H">🐇 Existing Hare Copies (H):</label>
+      <input id="H" type="range" min="0" max="20" value="2" oninput="syncInputs('H')">
+      <input id="Hnum" type="number" value="2" oninput="syncSliders('H')" max="20" min="0">
     </div>
 
     <div class="slider-group">
-      <label for="T">Token Doubler Power (T):</label>
-      <input id="T" type="range" min="0" max="10" value="0" oninput="syncInputs('T')">
-      <input id="Tnum" type="number" value="0" oninput="syncSliders('T')">
+      <label for="T">✨ Token Doubler Power (T):</label>
+      <input id="T" type="range" min="0" max="10" value="1" oninput="syncInputs('T')">
+      <input id="Tnum" type="number" value="1" oninput="syncSliders('T')" max="10" min="0">
     </div>
 
     <div class="slider-group">
-      <label for="A">Additional Trigger Count (A):</label>
-      <input id="A" type="range" min="0" max="10" value="0" oninput="syncInputs('A')">
-      <input id="Anum" type="number" value="0" oninput="syncSliders('A')">
+      <label for="A">🔁 Additional Trigger Count (A):</label>
+      <input id="A" type="range" min="0" max="10" value="1" oninput="syncInputs('A')">
+      <input id="Anum" type="number" value="1" oninput="syncSliders('A')" max="10" min="0">
     </div>
 
     <div id="result">Rabbits created: —</div>
-        <img src="./Rabbit.jpg" alt="Rabbit Token" class="card-art-top">
-
+    <img src="./Rabbit.jpg" alt="Rabbit Token" class="card-art-top">
 
     <div class="explanation">
       <p><strong>H</strong> — Number of other <em>Hare Apparents</em> already on the battlefield.</p>
       <p><strong>T</strong> — How many Token Doublers you have
       <p><strong>A</strong> — How many "Triggered abilities of X trigger an additional time" cards you have on the battlefield</p>
       <p>The result shows how many 1/1 Rabbit tokens spring into existence when your newest Hare resolves.</p>
+
+      <div class="formula-label">Mathematical Formula</div>
+      <div id="formula-block">
+        $$
+        X(H,T,A)=\Biggl\lbrace
+          \Biggl(
+            \sum_{n=1}^{A+1}
+            \left(2^{T}\right)^{2}\cdot
+            \bigl(H+2^{T}n\bigr)\cdot(A+1)
+          \Biggr)
+          +
+          \Bigl(
+            2^{T}\cdot
+            \bigl(H+2^{T}(A+1)\bigr)\cdot(A+1)
+          \Bigr)
+        \Biggr\rbrace
+        $$
+      </div>
     </div>
 
     <div class="art-row">
@@ -191,7 +241,7 @@ footer {
       <img src="./Hare.jpg" alt="Hare Apparent">
     </div>
 
-    <footer>““Why you getting mad at my 4 vampires you're about to make like 30 rabbits?” - Cody Rich right before he saw 300 rabbits”</footer>
+    <footer>“Why you getting mad at my 4 vampires — you're about to make like 30 rabbits?” — Cody Rich, right before he saw 300 rabbits</footer>
   </div>
 
 <script>
@@ -215,11 +265,8 @@ function syncSliders(id) {
   const slider = document.getElementById(id);
   const numBox = document.getElementById(id + 'num');
   let val = parseFloat(numBox.value);
-
-  // Keep number box within slider bounds
   if (val > parseFloat(slider.max)) val = parseFloat(slider.max);
   if (val < parseFloat(slider.min)) val = parseFloat(slider.min);
-
   numBox.value = val;
   slider.value = val;
   update();
@@ -234,6 +281,19 @@ function update() {
 }
 update();
 </script>
+
+<!-- MathJax -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
 </body>
 </html>
-
