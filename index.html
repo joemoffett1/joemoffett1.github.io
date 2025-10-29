@@ -8,6 +8,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Uncial+Antiqua&display=swap" rel="stylesheet">
 
 <style>
+/* ───────────────────────────────
+   ✨ BASE PAGE STYLING
+   ─────────────────────────────── */
 body {
   margin: 0;
   padding: 0;
@@ -32,6 +35,9 @@ body {
   text-align: center;
 }
 
+/* ───────────────────────────────
+   🔖 HEADERS
+   ─────────────────────────────── */
 h1 {
   font-family: "Uncial Antiqua", serif;
   color: #124e88;
@@ -47,20 +53,9 @@ h1 {
   margin-bottom: 20px;
 }
 
-.card-art-top {
-  display: block;
-  margin: 0 auto 10px;
-  width: 110px;
-  border-radius: 10px;
-  border: 2px solid #d8b552;
-  box-shadow: 0 0 12px rgba(28,105,175,0.4);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.card-art-top:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 18px rgba(255,221,130,0.8);
-}
-
+/* ───────────────────────────────
+   🎚️ SLIDERS & NUMBER BOXES
+   ─────────────────────────────── */
 .slider-group {
   display: flex;
   align-items: center;
@@ -68,19 +63,16 @@ h1 {
   gap: 10px;
   margin: 14px auto;
 }
-
 label {
   width: 230px;
   text-align: right;
   font-weight: 700;
   color: #2a1e13;
 }
-
 input[type="range"] {
   width: 160px;
   accent-color: #2f80ed;
 }
-
 input[type="number"] {
   width: 70px;
   padding: 4px;
@@ -91,13 +83,42 @@ input[type="number"] {
   background: #fffdf8;
   color: #1b1d25;
 }
-
 input[type="number"]:focus {
   outline: none;
   border-color: #4596e6;
   box-shadow: 0 0 8px rgba(69,150,230,0.6);
 }
 
+/* ───────────────────────────────
+   🪄 RESOLVE BUTTON
+   ─────────────────────────────── */
+button {
+  margin-top: 20px;
+  background: linear-gradient(180deg, #f5e2a5, #e7c75e);
+  border: 3px solid #d8b552;
+  border-radius: 10px;
+  padding: 10px 24px;
+  font-family: "Uncial Antiqua", serif;
+  font-size: 1.1em;
+  color: #124e88;
+  text-shadow: 0 0 5px rgba(255,255,255,0.6);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+button:hover {
+  background: linear-gradient(180deg, #ffeaa7, #f5d36e);
+  box-shadow: 0 0 12px rgba(255,215,150,0.7);
+}
+button.resolving {
+  background: linear-gradient(180deg, #bcd8ff, #78a8f0);
+  color: #fff;
+  box-shadow: 0 0 18px rgba(60,120,255,0.8);
+  pointer-events: none;
+}
+
+/* ───────────────────────────────
+   📜 RESULT TEXT
+   ─────────────────────────────── */
 #result {
   font-size: 1.7em;
   margin-top: 26px;
@@ -106,50 +127,88 @@ input[type="number"]:focus {
   text-shadow: 0 0 6px rgba(67,132,185,0.4);
 }
 
+/* ───────────────────────────────
+   🧙‍♂️ ANIMATIONS
+   ─────────────────────────────── */
+.narrative, .math-breakdown {
+  opacity: 0;
+  transform: translateY(-15px);
+  transition: all 1s ease;
+  background: rgba(255,255,255,0.8);
+  border: 3px solid #d8b552;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(27,102,170,0.3);
+  padding: 15px 18px;
+  margin-top: 20px;
+  text-align: left;
+}
+.show-scroll {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  animation: scrollFadeIn 1s ease-out;
+}
+@keyframes scrollFadeIn {
+  0% { opacity: 0; transform: translateY(-20px) scaleY(0.98); }
+  60% { opacity: 1; transform: translateY(0) scaleY(1.02); }
+  100% { transform: translateY(0) scaleY(1); }
+}
+.text-reveal {
+  opacity: 1 !important;
+  animation: textReveal 1.4s ease-in-out;
+}
+@keyframes textReveal {
+  0% { opacity: 0; filter: blur(3px); }
+  100% { opacity: 1; filter: blur(0); }
+}
+
+/* 📘 Unified Explanation Box — Updated for Open Parchment Look */
 .explanation {
   font-size: 0.95em;
   color: #2a1e13;
   margin-top: 30px;
   line-height: 1.6em;
   text-align: left;
-  background: rgba(255,255,255,0.75);
-  border-radius: 10px;
-  padding: 12px 14px;
-  box-shadow: inset 0 0 8px rgba(0,0,0,0.08);
+  background: linear-gradient(180deg, #fffdf8, #fdf6e8);
+  border: 3px solid #d8b552;
+  border-radius: 16px;
+  padding: 20px 22px;
+  box-shadow: 0 0 15px rgba(27,102,170,0.2), inset 0 0 10px rgba(0,0,0,0.05);
+  overflow: hidden;
+  transition: all 1.2s ease;
 }
 
-.explanation strong {
-  color: #124e88;
-}
-
-#formula-block {
-  margin-top: 22px;
-  text-align: center;
-}
-
-mjx-container {
-  color: #0f4174;
-  text-shadow: 0 0 10px rgba(27,102,170,0.3);
-  font-size: 1.05em;
-  animation: formulaFade 1.5s ease-in-out;
-}
-
-@keyframes formulaFade {
-  0% { opacity: 0; filter: blur(3px); }
-  100% { opacity: 1; filter: blur(0); }
-}
-
-.formula-label {
+.explanation-title {
   text-align: center;
   font-family: "Uncial Antiqua", serif;
+  font-size: 1.3em;
   color: #c79838;
-  text-shadow: 0 0 8px rgba(200,150,56,0.5);
-  margin-top: 20px;
-  margin-bottom: 4px;
-  font-size: 1.1em;
-  letter-spacing: 0.03em;
+  text-shadow: 0 0 6px rgba(200,150,56,0.5);
+  margin-bottom: 12px;
 }
 
+/* 🧮 Animated math section (no border, just flow) */
+#mathBreakdown {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 1s ease-out;
+  margin-top: 10px;
+}
+#mathBreakdown.text-reveal {
+  opacity: 1;
+  transform: translateY(0);
+  animation: fadeGrow 1.5s ease-in-out;
+}
+
+@keyframes fadeGrow {
+  0% { opacity: 0; transform: translateY(-20px) scaleY(0.95); }
+  60% { opacity: 1; transform: translateY(0) scaleY(1.02); }
+  100% { transform: translateY(0) scaleY(1); }
+}
+
+
+/* ───────────────────────────────
+   🎨 ART & FOOTER
+   ─────────────────────────────── */
 .art-row {
   display: flex;
   justify-content: space-between;
@@ -157,7 +216,6 @@ mjx-container {
   gap: 8px;
   margin-top: 25px;
 }
-
 .art-row img {
   width: 49%;
   border-radius: 12px;
@@ -165,12 +223,10 @@ mjx-container {
   box-shadow: 0 0 14px rgba(28,105,175,0.4);
   transition: 0.2s;
 }
-
 .art-row img:hover {
   transform: scale(1.03);
   box-shadow: 0 0 20px rgba(255,221,130,0.8);
 }
-
 footer {
   margin-top: 22px;
   font-size: 0.9em;
@@ -185,115 +241,167 @@ footer {
 </head>
 
 <body>
-  <div class="card">
+<div class="card">
+  <h1>Hare Apparent Offspring Rabbit Calculator</h1>
+  <p class="subtitle">So you cast a <strong>Hare Apparent</strong> paying its <em>Offspring</em> cost...</p>
 
-    <h1>Hare Apparent Offspring Rabbit Calculator</h1>
-    <p class="subtitle">So you cast a <strong>Hare Apparent</strong> paying its <em>Offspring</em> cost...</p>
-
-    <div class="slider-group">
-      <label for="H">🐇 Existing Hare Copies (H):</label>
-      <input id="H" type="range" min="0" max="20" value="0" oninput="syncInputs('H')">
-      <input id="Hnum" type="number" value="0" oninput="syncSliders('H')" max="20" min="0">
-    </div>
-
-    <div class="slider-group">
-      <label for="T">✨ Token Doubler Power (T):</label>
-      <input id="T" type="range" min="0" max="10" value="0" oninput="syncInputs('T')">
-      <input id="Tnum" type="number" value="0" oninput="syncSliders('T')" max="10" min="0">
-    </div>
-
-    <div class="slider-group">
-      <label for="A">🔁 Additional Trigger Count (A):</label>
-      <input id="A" type="range" min="0" max="10" value="0" oninput="syncInputs('A')">
-      <input id="Anum" type="number" value="0" oninput="syncSliders('A')" max="10" min="0">
-    </div>
-
-    <div id="result">Rabbits created: —</div>
-    <img src="./Rabbit.jpg" alt="Rabbit Token" class="card-art-top">
-
-    <div class="explanation">
-      <p><strong>H</strong> — Number of other <em>Hare Apparents</em> already on the battlefield.</p>
-      <p><strong>T</strong> — How many Token Doublers you have
-      <p><strong>A</strong> — How many "Triggered abilities of X trigger an additional time" cards you have on the battlefield</p>
-      <p>The result shows how many 1/1 Rabbit tokens spring into existence when your newest Hare resolves.</p>
-
-      <div class="formula-label">Mathematical Formula</div>
-      <div id="formula-block">
-        $$
-        X(H,T,A)=\Biggl\lbrace
-          \Biggl(
-            \sum_{n=1}^{A+1}
-            \left(2^{T}\right)^{2}\cdot
-            \bigl(H+2^{T}n\bigr)\cdot(A+1)
-          \Biggr)
-          +
-          \Bigl(
-            2^{T}\cdot
-            \bigl(H+2^{T}(A+1)\bigr)\cdot(A+1)
-          \Bigr)
-        \Biggr\rbrace
-        $$
-      </div>
-    </div>
-
-    <div class="art-row">
-      <img src="./zinnia.jpg" alt="Zinnia, Valley's Voice">
-      <img src="./Hare.jpg" alt="Hare Apparent">
-    </div>
-
-    <footer>“Why you getting mad at my 4 vampires — you're about to make like 30 rabbits?” — Cody Rich, right before he saw 300 rabbits</footer>
+  <!-- 🎚️ Input Controls -->
+  <div class="slider-group">
+    <label for="H">🐇 Existing Hare Copies (H):</label>
+    <input id="H" type="range" min="0" max="20" value="0" oninput="syncInputs('H')">
+    <input id="Hnum" type="number" value="0" oninput="syncSliders('H')" max="20" min="0">
+  </div>
+  <div class="slider-group">
+    <label for="T">✨ Token Doublers (T):</label>
+    <input id="T" type="range" min="0" max="10" value="0" oninput="syncInputs('T')">
+    <input id="Tnum" type="number" value="0" oninput="syncSliders('T')" max="10" min="0">
+  </div>
+  <div class="slider-group">
+    <label for="A">🔁 Additional Triggers (A):</label>
+    <input id="A" type="range" min="0" max="10" value="0" oninput="syncInputs('A')">
+    <input id="Anum" type="number" value="0" oninput="syncSliders('A')" max="10" min="0">
   </div>
 
+  <div id="result">Rabbits created: —</div>
+  <button id="resolveBtn" onclick="resolveStack()">Resolve</button>
+
+  <!-- 🪄 Stack Narrative -->
+  <div id="narrative" class="narrative"></div>
+
+  <!-- 📘 Unified Explanation Box -->
+  <div class="explanation">
+    <div class="explanation-title">📘 The Mathematical Breakdown</div>
+    <p><strong>H</strong> — Number of other <em>Hare Apparents</em> already on the battlefield.</p>
+    <p><strong>T</strong> — Number of <em>token doublers</em> such as Doubling Season or Anointed Procession.</p>
+    <p><strong>A</strong> — Number of <em>additional trigger</em> effects such as Zinnia, Valley’s Voice.</p>
+
+    <div class="formula" style="text-align:center; margin:10px 0;">
+      $$ 
+      X(H,T,A)=\Biggl\lbrace
+      \Biggl(
+      \sum_{n=1}^{A+1}
+      \left(2^{T}\right)^{2}\cdot
+      \bigl(H+2^{T}n\bigr)\cdot(A+1)
+      \Biggr)
+      +
+      \Bigl(
+      2^{T}\cdot
+      \bigl(H+2^{T}(A+1)\bigr)\cdot(A+1)
+      \Bigr)
+      \Biggr\rbrace
+      $$
+    </div>
+
+    <div id="mathBreakdown"></div>
+  </div>
+
+  <div class="art-row">
+    <img src="./zinnia.jpg" alt="Zinnia, Valley’s Voice">
+    <img src="./Hare.jpg" alt="Hare Apparent">
+  </div>
+  <footer>“Why you getting mad at my 4 vampires — you're about to make like 30 rabbits?” — Cody Rich</footer>
+</div>
+
 <script>
-function X(H, T, A) {
-  let term1 = 0;
-  for (let n = 1; n <= A + 1; n++) {
-    term1 += (2 ** T) ** 2 * (H + 2 ** T * n) * (A + 1);
+function X(H,T,A){
+  let term1=0;
+  for(let n=1;n<=A+1;n++){term1+=(2**T)**2*(H+2**T*n)*(A+1);}
+  let term2=(2**T)*(H+2**T*(A+1))*(A+1);
+  return{term1,term2,total:term1+term2};
+}
+function syncInputs(id){
+  const s=document.getElementById(id),n=document.getElementById(id+"num");
+  n.value=s.value;
+}
+function syncSliders(id){
+  const s=document.getElementById(id),n=document.getElementById(id+"num");
+  let v=parseFloat(n.value);
+  if(v>parseFloat(s.max))v=parseFloat(s.max);
+  if(v<parseFloat(s.min))v=parseFloat(s.min);
+  n.value=v;s.value=v;
+}
+
+/* 🪄 Resolve logic */
+function resolveStack(){
+  const btn=document.getElementById("resolveBtn");
+  btn.textContent="Resolving...";btn.classList.add("resolving");
+
+  const H=parseFloat(document.getElementById('H').value);
+  const T=parseFloat(document.getElementById('T').value);
+  const A=parseFloat(document.getElementById('A').value);
+
+  const {term1,term2,total}=X(H,T,A);
+  document.getElementById('result').textContent=`Rabbits created: ${total.toLocaleString()}`;
+
+  let nar=`<div class='narrative-title'>🪄 Stack Resolution Log</div>`;
+  for(let n=1;n<=A+1;n++){
+    const hC=2**T,seen=H+2**T*n,trig=A+1;
+    const rabbits=hC*seen*(2**T)*(A+1);
+    nar+=`<p>🪄 <strong>Offspring Trigger #${n}</strong> resolves.<br>
+    ${hC} new 🐰 Hares appear, seeing ${seen} Hares total.<br>
+    Their “Make Rabbits” triggers fire ${trig} times.<br>
+    → <strong>${rabbits}</strong> 🐇 Rabbits are created.</p>`;
   }
-  let term2 = (2 ** T) * (H + 2 ** T * (A + 1)) * (A + 1);
-  return term1 + term2;
-}
+  const final=(2**T)*(H+2**T*(A+1))*(A+1);
+  nar+=`<p>🪄 <strong>Original Hare’s Make Rabbits</strong> resolves last.<br>
+  It sees ${H+2**T*(A+1)} Hares and triggers ${A+1} times.<br>
+  → <strong>${final}</strong> 🐇 Rabbits are created.</p>
+  <p><strong>✨ Total:</strong> ${(A+1)*(2**T)} new Hares and ${total} Rabbits fill the battlefield.</p>`;
+  document.getElementById("narrative").innerHTML=nar;
 
-function syncInputs(id) {
-  const slider = document.getElementById(id);
-  const numBox = document.getElementById(id + 'num');
-  numBox.value = slider.value;
-  update();
-}
+  // 🧮 Build math breakdown (v3.9)
+  let math = `<div class='breakdown-intro'>Calculation Breakdown:</div>`;
+  math += `$$\\text{Given: } H=${H},\\ T=${T},\\ A=${A}$$`;
+  math += `$$\\text{Term}_1 = \\sum_{n=1}^{${A+1}} (2^{${T}})^2(H+2^{${T}}n)(A+1)$$`;
 
-function syncSliders(id) {
-  const slider = document.getElementById(id);
-  const numBox = document.getElementById(id + 'num');
-  let val = parseFloat(numBox.value);
-  if (val > parseFloat(slider.max)) val = parseFloat(slider.max);
-  if (val < parseFloat(slider.min)) val = parseFloat(slider.min);
-  numBox.value = val;
-  slider.value = val;
-  update();
-}
+  let offspringSum = 0;
 
-function update() {
-  const H = parseFloat(document.getElementById('H').value);
-  const T = parseFloat(document.getElementById('T').value);
-  const A = parseFloat(document.getElementById('A').value);
-  const result = X(H, T, A);
-  document.getElementById('result').textContent = `Rabbits created: ${result.toLocaleString()}`;
+  for (let n = 1; n <= A + 1; n++) {
+    const termValue = ((2 ** T) ** 2) * (H + 2 ** T * n) * (A + 1);
+    offspringSum += termValue;
+
+    const line1 = `(2^{${T}})^2(H+2^{${T}}(${n}))(A+1)`;
+    const line2 = `= ${(2 ** T) ** 2}(${H}+${2 ** T * n})(${A + 1})`;
+    const line3 = `= ${termValue.toLocaleString()}`;
+
+    math += `
+    $$\\textbf{Offspring Trigger } n=${n}:$$
+    $$${line1}$$
+    $$${line2}$$
+    $$${line3}$$
+    `;
+  }
+
+  const hareTerm = (2 ** T) * (H + 2 ** T * (A + 1)) * (A + 1);
+  const totalSum = offspringSum + hareTerm;
+
+  // 🧾 Add subtotal and final computation
+  math += `
+  $$\\textbf{Sum of Offspring Triggers: } ${offspringSum.toLocaleString()}$$
+  $$\\textbf{Original Hare Term: } (2^{${T}})(H+2^{${T}}(${A + 1}))(A+1) = ${hareTerm.toLocaleString()}$$
+  $$\\Rightarrow X(${H},${T},${A}) = ${offspringSum.toLocaleString()} + ${hareTerm.toLocaleString()} = ${totalSum.toLocaleString()}$$
+  `;
+
+  document.getElementById("mathBreakdown").innerHTML = math;
+
+
+  // reveal sequence
+  setTimeout(()=>{document.getElementById("narrative").classList.add("show-scroll");},500);
+  setTimeout(()=>{
+    document.getElementById("mathBreakdown").classList.add("text-reveal");
+    if(window.MathJax)MathJax.typesetPromise();
+  },1100);
+  setTimeout(()=>{btn.textContent="Resolve";btn.classList.remove("resolving");},2200);
 }
-update();
 </script>
 
-<!-- MathJax -->
+<!-- 🧮 MathJax -->
 <script>
-window.MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$','$$']],
-    processEscapes: true
-  },
-  svg: { fontCache: 'global' }
+window.MathJax={
+  tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:true},
+  svg:{fontCache:'global'}
 };
 </script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-
 </body>
 </html>
