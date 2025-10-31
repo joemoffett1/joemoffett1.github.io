@@ -248,18 +248,18 @@ footer {
   <!-- 🎚️ Input Controls -->
   <div class="slider-group">
     <label for="H">🐇 Existing Hare Copies (H):</label>
-    <input id="H" type="range" min="0" max="20" value="0" oninput="syncInputs('H')">
-    <input id="Hnum" type="number" value="0" oninput="syncSliders('H')" max="20" min="0">
+    <input id="H" type="range" min="0" max="40" value="0" oninput="syncInputs('H')">
+    <input id="Hnum" type="number" value="0" oninput="syncSliders('H')" max="40" min="0">
   </div>
   <div class="slider-group">
     <label for="T">✨ Token Doublers (T):</label>
-    <input id="T" type="range" min="0" max="10" value="0" oninput="syncInputs('T')">
-    <input id="Tnum" type="number" value="0" oninput="syncSliders('T')" max="10" min="0">
+    <input id="T" type="range" min="0" max="20" value="0" oninput="syncInputs('T')">
+    <input id="Tnum" type="number" value="0" oninput="syncSliders('T')" max="20" min="0">
   </div>
   <div class="slider-group">
     <label for="A">🔁 Additional Triggers (A):</label>
-    <input id="A" type="range" min="0" max="10" value="0" oninput="syncInputs('A')">
-    <input id="Anum" type="number" value="0" oninput="syncSliders('A')" max="10" min="0">
+    <input id="A" type="range" min="0" max="20" value="0" oninput="syncInputs('A')">
+    <input id="Anum" type="number" value="0" oninput="syncSliders('A')" max="20" min="0">
   </div>
 
   <div id="result">Rabbits created: —</div>
@@ -272,8 +272,8 @@ footer {
   <div class="explanation">
     <div class="explanation-title">📘 The Mathematical Breakdown</div>
     <p><strong>H</strong> — Number of other <em>Hare Apparents</em> already on the battlefield.</p>
-    <p><strong>T</strong> — Number of <em>token doublers</em> such as Doubling Season or Anointed Procession.</p>
-    <p><strong>A</strong> — Number of <em>additional trigger</em> effects such as Zinnia, Valley’s Voice.</p>
+    <p><strong>T</strong> — Number of <em>token doublers</em> such as Anointed Procession.</p>
+    <p><strong>A</strong> — Number of <em>additional trigger</em> effects you have such as Panharmonicon</p>
 
     <div class="formula" style="text-align:center; margin:10px 0;">
       $$ 
@@ -299,7 +299,7 @@ footer {
     <img src="./zinnia.jpg" alt="Zinnia, Valley’s Voice">
     <img src="./Hare.jpg" alt="Hare Apparent">
   </div>
-  <footer>“Why you getting mad at my 4 vampires — you're about to make like 30 rabbits?” — Cody Rich</footer>
+  <footer>“Why you getting mad at my 4 vampires — you're about to make like 30 rabbits?” — Cody Rich right before he saw 300 rabbits get created </footer>
 </div>
 
 <script>
