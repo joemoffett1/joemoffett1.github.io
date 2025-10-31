@@ -8,9 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Uncial+Antiqua&display=swap" rel="stylesheet">
 
 <style>
-/* ───────────────────────────────
-   ✨ BASE PAGE STYLING
-   ─────────────────────────────── */
+/* ✨ BASE PAGE STYLING */
 body {
   margin: 0;
   padding: 0;
@@ -35,9 +33,7 @@ body {
   text-align: center;
 }
 
-/* ───────────────────────────────
-   🔖 HEADERS
-   ─────────────────────────────── */
+/* 🔖 HEADERS */
 h1 {
   font-family: "Uncial Antiqua", serif;
   color: #124e88;
@@ -53,9 +49,7 @@ h1 {
   margin-bottom: 20px;
 }
 
-/* ───────────────────────────────
-   🎚️ SLIDERS & NUMBER BOXES
-   ─────────────────────────────── */
+/* 🎚️ SLIDERS & NUMBER BOXES */
 .slider-group {
   display: flex;
   align-items: center;
@@ -89,9 +83,7 @@ input[type="number"]:focus {
   box-shadow: 0 0 8px rgba(69,150,230,0.6);
 }
 
-/* ───────────────────────────────
-   🪄 RESOLVE BUTTON
-   ─────────────────────────────── */
+/* 🪄 RESOLVE BUTTON */
 button {
   margin-top: 20px;
   background: linear-gradient(180deg, #f5e2a5, #e7c75e);
@@ -116,9 +108,7 @@ button.resolving {
   pointer-events: none;
 }
 
-/* ───────────────────────────────
-   📜 RESULT TEXT
-   ─────────────────────────────── */
+/* 📜 RESULT TEXT */
 #result {
   font-size: 1.7em;
   margin-top: 26px;
@@ -127,9 +117,7 @@ button.resolving {
   text-shadow: 0 0 6px rgba(67,132,185,0.4);
 }
 
-/* ───────────────────────────────
-   🧙‍♂️ ANIMATIONS
-   ─────────────────────────────── */
+/* 🧙‍♂️ ANIMATIONS */
 .narrative, .math-breakdown {
   opacity: 0;
   transform: translateY(-15px);
@@ -161,7 +149,7 @@ button.resolving {
   100% { opacity: 1; filter: blur(0); }
 }
 
-/* 📘 Unified Explanation Box — Updated for Open Parchment Look */
+/* 📘 Unified Explanation Box */
 .explanation {
   font-size: 0.95em;
   color: #2a1e13;
@@ -173,10 +161,7 @@ button.resolving {
   border-radius: 16px;
   padding: 20px 22px;
   box-shadow: 0 0 15px rgba(27,102,170,0.2), inset 0 0 10px rgba(0,0,0,0.05);
-  overflow: hidden;
-  transition: all 1.2s ease;
 }
-
 .explanation-title {
   text-align: center;
   font-family: "Uncial Antiqua", serif;
@@ -186,29 +171,7 @@ button.resolving {
   margin-bottom: 12px;
 }
 
-/* 🧮 Animated math section (no border, just flow) */
-#mathBreakdown {
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: all 1s ease-out;
-  margin-top: 10px;
-}
-#mathBreakdown.text-reveal {
-  opacity: 1;
-  transform: translateY(0);
-  animation: fadeGrow 1.5s ease-in-out;
-}
-
-@keyframes fadeGrow {
-  0% { opacity: 0; transform: translateY(-20px) scaleY(0.95); }
-  60% { opacity: 1; transform: translateY(0) scaleY(1.02); }
-  100% { transform: translateY(0) scaleY(1); }
-}
-
-
-/* ───────────────────────────────
-   🎨 ART & FOOTER
-   ─────────────────────────────── */
+/* 🎨 ART & FOOTER */
 .art-row {
   display: flex;
   justify-content: space-between;
@@ -261,22 +224,25 @@ footer {
     <input id="A" type="range" min="0" max="20" value="0" oninput="syncInputs('A')">
     <input id="Anum" type="number" value="0" oninput="syncSliders('A')" max="20" min="0">
   </div>
+  <div class="slider-group">
+    <label for="Rnum">🐰 Existing Rabbit Tokens (R):</label>
+    <input id="Rnum" type="number" value="0" min="0">
+  </div>
 
   <div id="result">Rabbits created: —</div>
   <button id="resolveBtn" onclick="resolveStack()">Resolve</button>
 
-  <!-- 🪄 Stack Narrative -->
   <div id="narrative" class="narrative"></div>
 
-  <!-- 📘 Unified Explanation Box -->
   <div class="explanation">
     <div class="explanation-title">📘 The Mathematical Breakdown</div>
     <p><strong>H</strong> — Number of other <em>Hare Apparents</em> already on the battlefield.</p>
     <p><strong>T</strong> — Number of <em>token doublers</em> such as Anointed Procession.</p>
-    <p><strong>A</strong> — Number of <em>additional trigger</em> effects you have such as Panharmonicon</p>
+    <p><strong>A</strong> — Number of <em>additional trigger</em> effects such as Panharmonicon.</p>
+    <p><strong>R</strong> — Number of <em>existing Rabbit tokens</em> already on the battlefield.</p>
 
     <div class="formula" style="text-align:center; margin:10px 0;">
-      $$ 
+      $$
       X(H,T,A)=\Biggl\lbrace
       \Biggl(
       \sum_{n=1}^{A+1}
@@ -291,14 +257,20 @@ footer {
       \Biggr\rbrace
       $$
     </div>
-
     <div id="mathBreakdown"></div>
   </div>
 
-  <div class="art-row">
-    <img src="./zinnia.jpg" alt="Zinnia, Valley’s Voice">
-    <img src="./Hare.jpg" alt="Hare Apparent">
-  </div>
+<div class="art-row">
+  <img src="./zinnia.jpg" alt="Zinnia, Valley’s Voice">
+  <img src="./Hare.jpg" alt="Hare Apparent">
+</div>
+
+<!-- 🌟 New Art Row: Token Doublers & Trigger Enhancers -->
+<div class="art-row">
+  <img src="./proc.jpg" alt="Anointed Procession">
+  <img src="./pan.jpg" alt="Panharmonicon">
+</div>
+
   <footer>“Why you getting mad at my 4 vampires — you're about to make like 30 rabbits?” — Cody Rich right before he saw 300 rabbits get created </footer>
 </div>
 
@@ -309,19 +281,9 @@ function X(H,T,A){
   let term2=(2**T)*(H+2**T*(A+1))*(A+1);
   return{term1,term2,total:term1+term2};
 }
-function syncInputs(id){
-  const s=document.getElementById(id),n=document.getElementById(id+"num");
-  n.value=s.value;
-}
-function syncSliders(id){
-  const s=document.getElementById(id),n=document.getElementById(id+"num");
-  let v=parseFloat(n.value);
-  if(v>parseFloat(s.max))v=parseFloat(s.max);
-  if(v<parseFloat(s.min))v=parseFloat(s.min);
-  n.value=v;s.value=v;
-}
+function syncInputs(id){const s=document.getElementById(id),n=document.getElementById(id+"num");n.value=s.value;}
+function syncSliders(id){const s=document.getElementById(id),n=document.getElementById(id+"num");let v=parseFloat(n.value);if(v>parseFloat(s.max))v=parseFloat(s.max);if(v<parseFloat(s.min))v=parseFloat(s.min);n.value=v;s.value=v;}
 
-/* 🪄 Resolve logic */
 function resolveStack(){
   const btn=document.getElementById("resolveBtn");
   btn.textContent="Resolving...";btn.classList.add("resolving");
@@ -329,63 +291,63 @@ function resolveStack(){
   const H=parseFloat(document.getElementById('H').value);
   const T=parseFloat(document.getElementById('T').value);
   const A=parseFloat(document.getElementById('A').value);
+  const R=parseFloat(document.getElementById('Rnum').value)||0;
 
   const {term1,term2,total}=X(H,T,A);
-  document.getElementById('result').textContent=`Rabbits created: ${total.toLocaleString()}`;
+  const grandTotal=total+R;
+
+  let resultHTML=`Rabbits created: ${total.toLocaleString()}`;
+  if(R>0){
+    resultHTML+=`<br><span style="font-size:1.1em;color:#725a2e;">🐰 Total 1/1 rabbit tokens: ${grandTotal.toLocaleString()}</span>`;
+  }
+  document.getElementById('result').innerHTML=resultHTML;
 
   let nar=`<div class='narrative-title'>🪄 Stack Resolution Log</div>`;
   for(let n=1;n<=A+1;n++){
-    const hC=2**T,seen=H+2**T*n,trig=A+1;
+    const hC=2**T;
+    const seen=H+2**T*n;
+    const trig=A+1;
     const rabbits=hC*seen*(2**T)*(A+1);
     nar+=`<p>🪄 <strong>Offspring Trigger #${n}</strong> resolves.<br>
-    ${hC} new 🐰 Hares appear, seeing ${seen} Hares total.<br>
+    ${hC} new <strong>1/1 white Hare Apparent token${hC>1?'s':''}</strong> appear, seeing ${seen} total Hares.<br>
     Their “Make Rabbits” triggers fire ${trig} times.<br>
-    → <strong>${rabbits}</strong> 🐇 Rabbits are created.</p>`;
+    → <strong>${rabbits}</strong> <em>1/1 white Rabbit token${rabbits>1?'s':''}</em> are created.</p>`;
   }
+
   const final=(2**T)*(H+2**T*(A+1))*(A+1);
-  nar+=`<p>🪄 <strong>Original Hare’s Make Rabbits</strong> resolves last.<br>
-  It sees ${H+2**T*(A+1)} Hares and triggers ${A+1} times.<br>
-  → <strong>${final}</strong> 🐇 Rabbits are created.</p>
-  <p><strong>✨ Total:</strong> ${(A+1)*(2**T)} new Hares and ${total} Rabbits fill the battlefield.</p>`;
+  nar+=`<p>🪄 <strong>Original Hare’s “Make Rabbits”</strong> resolves last.<br>
+  It sees ${H+2**T*(A+1)} total Hares and triggers ${A+1} times.<br>
+  → <strong>${final}</strong> <em>1/1 white Rabbit token${final>1?'s':''}</em> are created.</p>
+  <p><strong>✨ Summary:</strong><br>
+  1 <strong>2/2 Hare Apparent</strong>, ${(A+1)*(2**T)} <strong>1/1 Hare Apparent token${(A+1)*(2**T)>1?'s':''}</strong>, and ${total} <strong>1/1 Rabbit token${total>1?'s':''}</strong> enter the battlefield.<br>
+  ${R>0?`Including existing ${R} Rabbits → <strong>${grandTotal}</strong> total Rabbits.`:''}</p>`;
   document.getElementById("narrative").innerHTML=nar;
 
-  // 🧮 Build math breakdown (v3.9)
-  let math = `<div class='breakdown-intro'>Calculation Breakdown:</div>`;
-  math += `$$\\text{Given: } H=${H},\\ T=${T},\\ A=${A}$$`;
-  math += `$$\\text{Term}_1 = \\sum_{n=1}^{${A+1}} (2^{${T}})^2(H+2^{${T}}n)(A+1)$$`;
-
-  let offspringSum = 0;
-
-  for (let n = 1; n <= A + 1; n++) {
-    const termValue = ((2 ** T) ** 2) * (H + 2 ** T * n) * (A + 1);
-    offspringSum += termValue;
-
-    const line1 = `(2^{${T}})^2(H+2^{${T}}(${n}))(A+1)`;
-    const line2 = `= ${(2 ** T) ** 2}(${H}+${2 ** T * n})(${A + 1})`;
-    const line3 = `= ${termValue.toLocaleString()}`;
-
-    math += `
-    $$\\textbf{Offspring Trigger } n=${n}:$$
-    $$${line1}$$
-    $$${line2}$$
-    $$${line3}$$
-    `;
+  // 🧮 Build math breakdown (same as before)
+  let math=`<div class='breakdown-intro'>Calculation Breakdown:</div>`;
+  math+=`$$\\text{Given: } H=${H},\\ T=${T},\\ A=${A},\\ R=${R}$$`;
+  math+=`$$\\text{Term}_1 = \\sum_{n=1}^{${A+1}} (2^{${T}})^2(H+2^{${T}}n)(A+1)$$`;
+  let offspringSum=0;
+  for(let n=1;n<=A+1;n++){
+    const termValue=((2**T)**2)*(H+2**T*n)*(A+1);
+    offspringSum+=termValue;
+    math+=`
+    $$\\textbf{Offspring Trigger } n=${n}: = ${termValue.toLocaleString()}$$`;
+  }
+  const hareTerm=(2**T)*(H+2**T*(A+1))*(A+1);
+  const totalSum=offspringSum+hareTerm;
+  math+=`
+  $$\\textbf{Sum of Offspring Triggers: } ${offspringSum.toLocaleString()}$$
+  $$\\textbf{Original Hare Term: } = ${hareTerm.toLocaleString()}$$
+  $$X(${H},${T},${A})=${totalSum.toLocaleString()}$$`;
+  if(R>0){
+    math+=`
+    $$\\textbf{Existing Rabbits (R): } ${R.toLocaleString()}$$
+    $$\\textbf{Final Total Rabbits: } X+R = ${totalSum.toLocaleString()} + ${R.toLocaleString()} = ${grandTotal.toLocaleString()}$$`;
   }
 
-  const hareTerm = (2 ** T) * (H + 2 ** T * (A + 1)) * (A + 1);
-  const totalSum = offspringSum + hareTerm;
+  document.getElementById("mathBreakdown").innerHTML=math;
 
-  // 🧾 Add subtotal and final computation
-  math += `
-  $$\\textbf{Sum of Offspring Triggers: } ${offspringSum.toLocaleString()}$$
-  $$\\textbf{Original Hare Term: } (2^{${T}})(H+2^{${T}}(${A + 1}))(A+1) = ${hareTerm.toLocaleString()}$$
-  $$\\Rightarrow X(${H},${T},${A}) = ${offspringSum.toLocaleString()} + ${hareTerm.toLocaleString()} = ${totalSum.toLocaleString()}$$
-  `;
-
-  document.getElementById("mathBreakdown").innerHTML = math;
-
-
-  // reveal sequence
   setTimeout(()=>{document.getElementById("narrative").classList.add("show-scroll");},500);
   setTimeout(()=>{
     document.getElementById("mathBreakdown").classList.add("text-reveal");
@@ -395,12 +357,8 @@ function resolveStack(){
 }
 </script>
 
-<!-- 🧮 MathJax -->
 <script>
-window.MathJax={
-  tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:true},
-  svg:{fontCache:'global'}
-};
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:true},svg:{fontCache:'global'}};
 </script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </body>
