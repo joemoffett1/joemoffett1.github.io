@@ -479,6 +479,22 @@ function resolveStack(){
     }, 2200);
   }
 }
+  
+// ══════════════════════════════════════════════
+// 🧩 INPUT FOCUS / CLEAR LOGIC
+// Automatically clears "0" when focused, restores if left empty
+// ══════════════════════════════════════════════
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener("focus", () => {
+      if (input.value === "0") input.value = "";
+    });
+    input.addEventListener("blur", () => {
+      if (input.value.trim() === "") input.value = "0";
+    });
+  });
+});
+  
 </script>
 
 <script>
