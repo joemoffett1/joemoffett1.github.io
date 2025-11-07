@@ -413,7 +413,7 @@ function resolveStack(){
   <ul>
     <li>Each token you create will create <strong>${perHare}</strong> times as many tokens (<em>3<sup>${O}</sup> × 2<sup>${T}</sup></em>).</li>
     <li>Each Enter the Battlefield trigger will trigger <strong>${A+1}</strong> times.</li>
-    <li>You start with <strong>${H}</strong> <em>Hare Apparents</em> on the battlefield and <strong>${R}</strong> Rabbit tokens.</li>
+    <li>You start with <strong>${H}</strong> <em>Hare Apparents</em> and <strong>${R}</strong> Rabbit tokens on the battlefield.</li>
   </ul>`;
 
   nar+=`<p class="section-heading">You cast a Hare Apparent paying its Offspring cost and it resolves.</p>
@@ -450,8 +450,8 @@ function resolveStack(){
 
   nar+=`<p class="section-heading">Final Resolution</p>
   <ul>
-    <li>After all Offspring triggers resolve, the remaining Make Rabbits triggers from the original Hare resolve last.</li>
-    <li>Each sees all Hares currently on the battlefield and creates Rabbits accordingly.</li>
+    <li>After all Offspring triggers resolve, the remaining Make Rabbits triggers from the original Hare resolves.</li>
+    <li>Each trigger will see <strong>${totalHares}</strong> Other Hares on the battlefield for each trigger.</li>
     <li>When the stack fully resolves, you control:</li>
     <ul>
       <li>1 regular 2/2 <em>Hare Apparent</em></li>
