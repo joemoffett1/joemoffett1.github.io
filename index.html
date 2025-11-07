@@ -449,11 +449,14 @@ function resolveStack(){
   }
 
 // 🏁 FINAL RESOLUTION SECTION
+// Calculate total hares after all offspring triggers
+const finalHares = H + (3 ** O * 2 ** T) * (A + 1);
+
 nar += `<p class="section-heading">Final Resolution</p>
 <ul>
   <li>After all Offspring triggers resolve, the remaining Make Rabbits triggers from the original Hare resolve last.</li>
-  <li>Each of these triggers sees <strong>${totalHares}</strong> Hares on the battlefield and makes <strong>${perHare * totalHares}</strong> Rabbits per trigger.</li>
-  <li>With <strong>${A + 1}</strong> total Make Rabbits triggers remaining from the original Hare, that results in <strong>${(A + 1) * perHare * totalHares}</strong> additional 1/1 white Rabbit token${((A + 1) * perHare * totalHares) > 1 ? "s" : ""}.</li>
+  <li>Each of these triggers sees <strong>${finalHares}</strong> Hares on the battlefield and makes <strong>${perHare * finalHares}</strong> Rabbits per trigger.</li>
+  <li>With <strong>${A + 1}</strong> total Make Rabbits triggers remaining from the original Hare, that results in <strong>${(A + 1) * perHare * finalHares}</strong> additional 1/1 white Rabbit token${((A + 1) * perHare * finalHares) > 1 ? "s" : ""}.</li>
 </ul>`;
 
 stack["Make Rabbits (Original)"] = A + 1;
