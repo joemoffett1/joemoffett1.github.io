@@ -448,17 +448,30 @@ function resolveStack(){
     nar+=buildStackDisplay(stack);
   }
 
-  nar+=`<p class="section-heading">Final Resolution</p>
+// 🏁 FINAL RESOLUTION SECTION
+nar += `<p class="section-heading">Final Resolution</p>
+<ul>
+  <li>After all Offspring triggers resolve, the remaining Make Rabbits triggers from the original Hare resolve last.</li>
+  <li>Each of these triggers sees <strong>${totalHares}</strong> Hares on the battlefield and makes <strong>${perHare * totalHares}</strong> Rabbits per trigger.</li>
+  <li>With <strong>${A + 1}</strong> total Make Rabbits triggers remaining from the original Hare, that results in <strong>${(A + 1) * perHare * totalHares}</strong> additional 1/1 white Rabbit token${((A + 1) * perHare * totalHares) > 1 ? "s" : ""}.</li>
+</ul>`;
+
+stack["Make Rabbits (Original)"] = A + 1;
+nar += buildStackDisplay(stack);
+
+delete stack["Make Rabbits (Original)"];
+nar += buildStackDisplay(stack);
+
+nar += `<p class="section-heading">Final Board State</p>
+<ul>
+  <li>When the stack fully resolves, you control:</li>
   <ul>
-    <li>After all Offspring triggers resolve, the remaining Make Rabbits triggers from the original Hare resolves.</li>
-    <li>Each trigger will see <strong>${totalHares}</strong> Other Hares on the battlefield for each trigger.</li>
-    <li>When the stack fully resolves, you control:</li>
-    <ul>
-      <li>1 regular 2/2 <em>Hare Apparent</em></li>
-      <li><strong>${(A+1)*(3**O*2**T)}</strong> 1/1 <em>Hare Apparent</em> token${(A+1)*(3**O*2**T)>1?"s":""}</li>
-      <li><strong>${total.toLocaleString()}</strong> 1/1 Rabbit token${total>1?"s":""}${R>0?` (including existing ${R} Rabbits → <strong>${grand.toLocaleString()}</strong> total)`:""}</li>
-    </ul>
-  </ul>`;
+    <li>1 regular 2/2 <em>Hare Apparent</em></li>
+    <li><strong>${(A + 1) * (3 ** O * 2 ** T)}</strong> 1/1 <em>Hare Apparent</em> token${(A + 1) * (3 ** O * 2 ** T) > 1 ? "s" : ""}</li>
+    <li><strong>${total.toLocaleString()}</strong> 1/1 Rabbit token${total > 1 ? "s" : ""}${R > 0 ? ` (including existing ${R} Rabbits → <strong>${grand.toLocaleString()}</strong> total)` : ""}</li>
+  </ul>
+</ul>`;
+
 
   document.getElementById("narrative").innerHTML=nar;
 
