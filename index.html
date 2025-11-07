@@ -5,10 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hare Apparent Offspring Rabbit Calculator 🪄</title>
 
+<!-- ══════════════════════════════════════════════ -->
+<!-- 🎨 FONT IMPORTS & BASE STYLES -->
+<!-- ══════════════════════════════════════════════ -->
 <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Uncial+Antiqua&display=swap" rel="stylesheet">
 
 <style>
+/* ══════════════════════════════════════════════ */
 /* ✨ BASE PAGE STYLING */
+/* Controls the general layout, background, and card container */
+/* ══════════════════════════════════════════════ */
 body {
   margin: 0;
   padding: 0;
@@ -32,7 +38,10 @@ body {
   text-align: center;
 }
 
-/* 🔖 HEADERS */
+/* ══════════════════════════════════════════════ */
+/* 🔖 HEADERS & SECTION HEADINGS */
+/* Controls title, subtitle, and section label styles */
+/* ══════════════════════════════════════════════ */
 h1 {
   font-family: "Uncial Antiqua", serif;
   color: #124e88;
@@ -46,8 +55,34 @@ h1 {
   color: #725a2e;
   margin-bottom: 20px;
 }
+.section-heading {
+  text-align: center;
+  font-weight: 700;
+  color: #124e88;
+  position: relative;
+  display: inline-block;
+  margin: 16px auto 8px;
+  font-size: 1.05em;
+}
+.section-heading::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 0%;
+  background-color: #d8b552;
+  margin: 6px auto 0;
+  transition: width 0.4s ease-in-out, opacity 0.4s ease-in-out;
+  opacity: 0;
+}
+.section-heading:hover::after {
+  width: 80%;
+  opacity: 1;
+}
 
+/* ══════════════════════════════════════════════ */
 /* 🎚️ INPUT CONTROLS */
+/* Controls all sliders and numeric inputs */
+/* ══════════════════════════════════════════════ */
 .slider-group {
   display: flex;
   align-items: center;
@@ -81,7 +116,10 @@ input[type="number"]:focus {
   box-shadow: 0 0 8px rgba(69,150,230,0.6);
 }
 
-/* 🪄 BUTTON */
+/* ══════════════════════════════════════════════ */
+/* 🪄 BUTTON STYLE */
+/* Controls the appearance and hover/active states of the Resolve button */
+/* ══════════════════════════════════════════════ */
 button {
   margin-top: 20px;
   background: linear-gradient(180deg, #f5e2a5, #e7c75e);
@@ -106,16 +144,23 @@ button.resolving {
   pointer-events: none;
 }
 
-/* 📜 RESULT */
+/* ══════════════════════════════════════════════ */
+/* 📜 RESULT DISPLAY */
+/* Updates the number of Rabbits created with a fade effect */
+/* ══════════════════════════════════════════════ */
 #result {
   font-size: 1.7em;
   margin-top: 26px;
   font-weight: bold;
   color: #0f4174;
   text-shadow: 0 0 6px rgba(67,132,185,0.4);
+  transition: opacity 0.5s ease-in-out;
 }
 
-/* 🧙‍♂️ NARRATIVE */
+/* ══════════════════════════════════════════════ */
+/* 🧙‍♂️ NARRATIVE AREA */
+/* Contains the dynamic resolution story + stack visuals */
+/* ══════════════════════════════════════════════ */
 .narrative {
   opacity: 0;
   transform: translateY(-15px);
@@ -139,7 +184,31 @@ button.resolving {
   100% { transform: translateY(0) scaleY(1); }
 }
 
+/* ══════════════════════════════════════════════ */
+/* 🟨 STACK UPDATE NOTES & BULLETS */
+/* Styles for golden update notes and consistent bullet lists */
+/* ══════════════════════════════════════════════ */
+.stack-update {
+  text-align: center;
+  font-size: 0.9em;
+  font-style: italic;
+  color: #d8b552;
+  margin-top: 8px;
+  margin-bottom: -6px;
+  font-weight: 600;
+}
+ul {
+  margin: 6px 0 10px 35px;
+  padding: 0;
+  list-style-type: disc;
+  color: #1b1d25;
+}
+ul li { margin-bottom: 6px; }
+
+/* ══════════════════════════════════════════════ */
 /* 📘 EXPLANATION BOX */
+/* Explains the math formula and variable meanings */
+/* ══════════════════════════════════════════════ */
 .explanation {
   font-size: 0.95em;
   color: #2a1e13;
@@ -161,7 +230,10 @@ button.resolving {
   margin-bottom: 12px;
 }
 
+/* ══════════════════════════════════════════════ */
 /* 🧱 STACK VISUALIZATION */
+/* Displays stack boxes and arrows in narrative */
+/* ══════════════════════════════════════════════ */
 .stack-line {
   background: rgba(255,255,255,0.8);
   border: 2px solid #d8b552;
@@ -185,13 +257,14 @@ button.resolving {
   padding: 4px 8px;
   box-shadow: 0 0 6px rgba(27,102,170,0.2);
   white-space: nowrap;
+  font-weight: 700;
 }
-.stack-arrow {
-  color: #c79838;
-  font-weight: bold;
-}
+.stack-arrow { color: #c79838; font-weight: bold; }
 
+/* ══════════════════════════════════════════════ */
 /* 🎨 ART & FOOTER */
+/* Contains flavor art and flavor text quote */
+/* ══════════════════════════════════════════════ */
 .art-row {
   display: flex;
   justify-content: space-between;
@@ -224,12 +297,15 @@ footer {
 </head>
 
 <body>
+<!-- ══════════════════════════════════════════════ -->
+<!-- 🪄 MAIN CARD CONTAINER -->
+<!-- ══════════════════════════════════════════════ -->
 <div class="card">
   <h1>Hare Apparent Offspring Rabbit Calculator</h1>
   <p class="subtitle">So you cast a <strong>Hare Apparent</strong> paying its <em>Offspring</em> cost...</p>
 
-  <div class="slider-group">
-    <label for="H">🐇 Existing Hare Copies (H):</label>
+  <!-- ════════════ 🧮 SLIDER INPUTS ════════════ -->
+  <div class="slider-group"> <label for="H">🐇 Existing Hare Copies (H):</label>
     <input id="H" type="range" min="0" max="40" value="0" oninput="syncInputs('H')">
     <input id="Hnum" type="number" value="0" oninput="syncSliders('H')" max="40" min="0">
   </div>
@@ -248,11 +324,14 @@ footer {
     <input id="Rnum" type="number" value="0" min="0">
   </div>
 
+  <!-- ════════════ 🧾 OUTPUT / BUTTON ════════════ -->
   <div id="result">Rabbits created: —</div>
   <button id="resolveBtn" onclick="resolveStack()">Resolve</button>
 
+  <!-- ════════════ 📜 NARRATIVE CONTAINER ════════════ -->
   <div id="narrative" class="narrative"></div>
 
+  <!-- ════════════ 📘 MATH EXPLANATION BOX ════════════ -->
   <div class="explanation" id="mathBox">
     <div class="explanation-title">📘 The Mathematical Breakdown</div>
     <p><strong>H</strong> — Number of other <em>Hare Apparents</em> already on the battlefield.</p>
@@ -265,6 +344,7 @@ footer {
     <p id="rabbitsPerHare"><strong>Each Hare makes:</strong> 1 Rabbit per Hare it sees.</p>
   </div>
 
+  <!-- ════════════ 🎨 ART & FOOTER ════════════ -->
   <div class="art-row">
     <img src="./zinnia.jpg" alt="Zinnia, Valley’s Voice">
     <img src="./Hare.jpg" alt="Hare Apparent">
@@ -276,56 +356,73 @@ footer {
   <footer>“Why you getting mad at my 4 vampires — you're about to make like 30 rabbits?” — Cody Rich right before he saw 300 rabbits get created</footer>
 </div>
 
+<!-- ══════════════════════════════════════════════ -->
+<!-- ⚙️ CORE JAVASCRIPT LOGIC -->
+<!-- Handles calculations, narrative building, and UI updates -->
+<!-- ══════════════════════════════════════════════ -->
 <script>
-function X(H,T,A){
-  let term1=0;
-  for(let n=1;n<=A+1;n++)term1+=(2**T)**2*(H+2**T*n)*(A+1);
-  let term2=(2**T)*(H+2**T*(A+1))*(A+1);
-  return{term1,term2,total:term1+term2};
-}
+function X(H,T,A){let term1=0;for(let n=1;n<=A+1;n++)term1+=(2**T)**2*(H+2**T*n)*(A+1);let term2=(2**T)*(H+2**T*(A+1))*(A+1);return{term1,term2,total:term1+term2};}
 function syncInputs(id){document.getElementById(id+"num").value=document.getElementById(id).value;}
 function syncSliders(id){let s=document.getElementById(id),n=document.getElementById(id+"num");n.value=Math.min(Math.max(parseFloat(n.value),s.min),s.max);s.value=n.value;}
-function buildStackDisplay(groups){
-  const keys=Object.keys(groups).filter(k=>groups[k]>0);
-  if(!keys.length)return"";
-  let html='<div class="stack-line">';
-  for(let i=0;i<keys.length;i++){
-    html+=`<div class="stack-box"><strong>${groups[keys[i]]}</strong>× ${keys[i]}</div>`;
-    if(i<keys.length-1)html+='<div class="stack-arrow">→</div>';
-  }
-  html+='</div>';
-  return html;
-}
+function buildStackDisplay(groups){const keys=Object.keys(groups).filter(k=>groups[k]>0);if(!keys.length)return"";let html='<div class="stack-line">';for(let i=0;i<keys.length;i++){html+=`<div class="stack-box"><strong>${groups[keys[i]]}</strong>× ${keys[i]}</div>`;if(i<keys.length-1)html+='<div class="stack-arrow">←</div>'; }html+='</div>';return html;}
+
 function resolveStack(){
   const btn=document.getElementById("resolveBtn");
   btn.textContent="Resolving...";btn.classList.add("resolving");
   const H=+document.getElementById('H').value,T=+document.getElementById('T').value,A=+document.getElementById('A').value,R=+document.getElementById('Rnum').value||0;
-  const {term1,term2,total}=X(H,T,A),grand=total+R;
-  const perHare=2**T;
+  const {term1,term2,total}=X(H,T,A),grand=total+R;const perHare=2**T;
+
+  const resultBox=document.getElementById("result");
+  resultBox.style.opacity=0;
+  resultBox.innerHTML=`Rabbits created: ${total.toLocaleString()}${R>0?`<br><span style="font-size:1.1em;color:#725a2e;">🐰 Total rabbits now: ${grand.toLocaleString()}</span>`:""}`;
+  setTimeout(()=>resultBox.style.opacity=1,150);
+
   document.getElementById("rabbitsPerHare").innerHTML=`<strong>Each Hare makes:</strong> ${perHare} Rabbit${perHare>1?"s":""} per Hare it sees.`;
-  document.getElementById('result').innerHTML=`Rabbits created: ${total.toLocaleString()}${R>0?`<br><span style="font-size:1.1em;color:#725a2e;">🐰 Total rabbits now: ${grand.toLocaleString()}</span>`:""}`;
-  let nar=`<p>Your <strong>2/2 Hare Apparent</strong> enters the battlefield.<br>It creates <strong>${A+1}</strong> “Make Rabbits” triggers and <strong>${A+1}</strong> “Offspring” triggers.<br>You stack the triggers so that all Offspring triggers resolve first, followed by the Make Rabbits triggers.</p>`;
+
+  let nar=`<p class="section-heading">You cast a Hare Apparent paying its Offspring cost and it resolves.</p>
+  <ul>
+    <li>It creates <strong>${A+1}</strong> Make Rabbits triggers and <strong>${A+1}</strong> Offspring triggers.</li>
+    <li>You stack the triggers so that all Offspring triggers resolve first, followed by the Make Rabbits triggers.</li>
+  </ul>`;
   let stack={"Make Rabbits (Original)":A+1,"Offspring":A+1};
   nar+=buildStackDisplay(stack);
+
   for(let n=1;n<=A+1;n++){
-    stack["Offspring"]-=1;if(stack["Offspring"]<=0)delete stack["Offspring"];
+    stack["Offspring"]-=1;
+    if(stack["Offspring"]<=0)delete stack["Offspring"];
     const hares=2**T,trigs=A+1,totalMake=hares*trigs,totalHares=H+2**T*n;
     const rabbits=((2**T)**2)*(H+2**T*n)*(A+1);
-    nar+=`<p><strong>Offspring Trigger #${n}</strong> resolves.<br>
-    ${hares} 1/1 white <em>Hare Apparent</em> token${hares>1?"s":""} enter the battlefield simultaneously.<br>
-    Each triggers its “Make Rabbits” ability ${trigs} times, for <strong>${totalMake}</strong> total “Make Rabbits” triggers placed on top of the stack.<br>
-    Each Hare makes <strong>${perHare}</strong> Rabbit${perHare>1?"s":""} per Hare it sees.<br>
-    Each Hare sees <strong>${totalHares}</strong> Hares on the battlefield and creates — <strong>${rabbits.toLocaleString()}</strong> 1/1 white Rabbit token${rabbits>1?"s":""}.</p>`;
-    const key=`Make Rabbits (Offspring #${n})`;stack[key]=(stack[key]||0)+totalMake;
+    const key=`Make Rabbits (Offspring #${n})`;
+    nar+=`<p class="section-heading">Offspring Trigger #${n} Resolves</p>
+    <ul>
+      <li><strong>${hares}</strong> 1/1 white <em>Hare Apparent</em> token${hares>1?"s":""} enter the battlefield simultaneously.</li>
+      <li>Each triggers its Make Rabbits ability <strong>${trigs}</strong> times, for <strong>${totalMake}</strong> total Make Rabbits triggers placed on top of the stack.</li>
+    </ul>`;
+    nar+=`<div class="stack-update">➕ <strong>${totalMake}</strong>× Make Rabbits (Offspring #${n}) added to the stack</div>`;
+    stack[key]=totalMake;
+    nar+=buildStackDisplay(stack);
+    nar+=`<p class="section-heading">Make Rabbits (Offspring #${n}) Trigger Resolves</p>
+    <ul>
+      <li>Each Hare makes <strong>${perHare}</strong> Rabbit${perHare>1?"s":""} per Hare it sees.</li>
+      <li>Each Hare sees <strong>${totalHares}</strong> Hares on the battlefield making a total of <strong>${(2**T)*totalHares}</strong> Rabbits per trigger of Make Rabbits.</li>
+      <li><strong>${totalMake}</strong> total Make Rabbits triggers resolve sequentially resulting in <strong>${rabbits.toLocaleString()}</strong> 1/1 white Rabbit token${rabbits>1?"s":""}.</li>
+    </ul>`;
+    delete stack[key];
     nar+=buildStackDisplay(stack);
   }
-  nar+=`<p>After all Offspring triggers resolve, the remaining “Make Rabbits” triggers from the original Hare resolve in last-in, first-out order.<br>Each sees all Hares currently on the battlefield and creates Rabbits accordingly.</p>`;
-  delete stack["Offspring"];
-  nar+=buildStackDisplay(stack);
-  nar+=`<p><strong>Final Resolution:</strong><br>When the stack fully resolves, you control:<br>
-  • 1 regular 2/2 <em>Hare Apparent</em><br>
-  • <strong>${(A+1)*(2**T)}</strong> 1/1 <em>Hare Apparent</em> token${(A+1)*(2**T)>1?"s":""}<br>
-  • <strong>${total.toLocaleString()}</strong> 1/1 Rabbit token${total>1?"s":""}${R>0?`<br>Including existing ${R} Rabbits → <strong>${grand.toLocaleString()}</strong> total Rabbits.`:""}</p>`;
+
+  nar+=`<p class="section-heading">Final Resolution</p>
+  <ul>
+    <li>After all Offspring triggers resolve, the remaining Make Rabbits triggers from the original Hare resolve last.</li>
+    <li>Each sees all Hares currently on the battlefield and creates Rabbits accordingly.</li>
+    <li>When the stack fully resolves, you control:</li>
+    <ul>
+      <li>1 regular 2/2 <em>Hare Apparent</em></li>
+      <li><strong>${(A+1)*(2**T)}</strong> 1/1 <em>Hare Apparent</em> token${(A+1)*(2**T)>1?"s":""}</li>
+      <li><strong>${total.toLocaleString()}</strong> 1/1 Rabbit token${total>1?"s":""}${R>0?` (including existing ${R} Rabbits → <strong>${grand.toLocaleString()}</strong> total)`:""}</li>
+    </ul>
+  </ul>`;
+
   document.getElementById("narrative").innerHTML=nar;
   setTimeout(()=>document.getElementById("narrative").classList.add("show-scroll"),500);
   setTimeout(()=>window.MathJax?.typesetPromise(),1100);
@@ -333,6 +430,10 @@ function resolveStack(){
 }
 </script>
 
+<!-- ══════════════════════════════════════════════ -->
+<!-- 🧩 MATHJAX CONFIGURATION -->
+<!-- Handles LaTeX rendering for the math formula -->
+<!-- ══════════════════════════════════════════════ -->
 <script>
 window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']]},svg:{fontCache:'global'}};
 </script>
