@@ -459,11 +459,10 @@ nar += `<p class="section-heading">Final Resolution</p>
   <li>With <strong>${A + 1}</strong> total Make Rabbits triggers remaining from the original Hare, that results in <strong>${(A + 1) * perHare * finalHares}</strong> additional 1/1 white Rabbit token${((A + 1) * perHare * finalHares) > 1 ? "s" : ""}.</li>
 </ul>`;
 
-stack["Make Rabbits (Original)"] = A + 1;
-nar += buildStackDisplay(stack);
+// ✨ Optional golden stack update line
+nar += `<div class="stack-update">➕ <strong>${(A + 1) * perHare * finalHares}</strong> Rabbits created from the final Make Rabbits triggers</div>`;
 
-delete stack["Make Rabbits (Original)"];
-nar += buildStackDisplay(stack);
+// ⚡ No stack box display for original — skip showing it entirely now
 
 nar += `<p class="section-heading">Final Board State</p>
 <ul>
@@ -474,6 +473,7 @@ nar += `<p class="section-heading">Final Board State</p>
     <li><strong>${total.toLocaleString()}</strong> 1/1 Rabbit token${total > 1 ? "s" : ""}${R > 0 ? ` (including existing ${R} Rabbits → <strong>${grand.toLocaleString()}</strong> total)` : ""}</li>
   </ul>
 </ul>`;
+
 
 
   document.getElementById("narrative").innerHTML=nar;
