@@ -412,51 +412,72 @@ function resolveStack(){
   let nar=`<p class="section-heading">Starting Conditions:</p>
   <ul>
     <li>Each token you create will create <strong>${perHare}</strong> times as many tokens (<em>3<sup>${O}</sup> × 2<sup>${T}</sup></em>).</li>
-    <li>Each Enter the Battlefield trigger will trigger <strong>${A+1}</strong> times.</li>
+    <li>Each Enter the Battlefield trigger will trigger <strong>${A+1}</strong> time${A+1 > 1 ? "s" : ""}.</li>
     <li>You start with <strong>${H}</strong> <em>Hare Apparents</em> and <strong>${R}</strong> Rabbit tokens on the battlefield.</li>
   </ul>`;
 
   nar+=`<p class="section-heading">You cast a Hare Apparent paying its Offspring cost and it resolves.</p>
   <ul>
-    <li>It creates <strong>${A+1}</strong> Make Rabbits triggers and <strong>${A+1}</strong> Offspring triggers.</li>
+    <li>It creates <strong>${A+1}</strong> Make Rabbits and <strong>${A+1}</strong> Offspring trigger${A+1 > 1 ? "s" : ""}, then puts them on the stack.</li>
     <li>You stack the triggers so that all Offspring triggers resolve first, followed by the Make Rabbits triggers.</li>
   </ul>`;
   let stack={"Make Rabbits (Original)":A+1,"Offspring":A+1};
   nar+=buildStackDisplay(stack);
 
-  for(let n=1;n<=A+1;n++){
-    stack["Offspring"]-=1;
-    if(stack["Offspring"]<=0)delete stack["Offspring"];
-    const hares=3**O*2**T,trigs=A+1,totalMake=hares*trigs,totalHares=H+3**O*2**T*n;
-    const rabbits=((3**O*2**T)**2)*(H+3**O*2**T*n)*(A+1);
-    const key=`Make Rabbits (Offspring #${n})`;
-    nar+=`<p class="section-heading">Offspring Trigger #${n} Resolves</p>
-    <ul>
-      <li><strong>${hares}</strong> 1/1 white <em>Hare Apparent</em> token${hares>1?"s":""} enter the battlefield simultaneously.</li>
-      <li>Each triggers its Make Rabbits ability <strong>${trigs}</strong> times, for <strong>${totalMake}</strong> total Make Rabbits triggers placed on top of the stack.</li>
-    </ul>`;
-    nar+=`<div class="stack-update">➕ <strong>${totalMake}</strong>× Make Rabbits (Offspring #${n}) added to the stack</div>`;
-    stack[key]=totalMake;
-    nar+=buildStackDisplay(stack);
-    nar+=`<p class="section-heading">Make Rabbits (Offspring #${n}) Trigger Resolves</p>
-    <ul>
-      <li>Each Hare makes <strong>${perHare}</strong> Rabbits per Hare it sees.</li>
-      <li>Each Hare sees <strong>${totalHares}</strong> Hares on the battlefield making a total of <strong>${perHare*totalHares}</strong> Rabbits per trigger of Make Rabbits.</li>
-      <li><strong>${totalMake}</strong> total Make Rabbits triggers resolve sequentially resulting in <strong>${rabbits.toLocaleString()}</strong> 1/1 white Rabbit token${rabbits>1?"s":""}.</li>
-    </ul>`;
-    delete stack[key];
-    nar+=buildStackDisplay(stack);
-  }
+  for (let n = 1; n <= A + 1; n++) {
+  stack["Offspring"] -= 1;
+  if (stack["Offspring"] <= 0) delete stack["Offspring"];
+
+  const hares = 3 ** O * 2 ** T;
+  const trigs = A + 1;
+  const totalMake = hares * trigs;
+  const totalHares = H + 3 ** O * 2 ** T * n;
+  const rabbits = ((3 ** O * 2 ** T) ** 2) * (H + 3 ** O * 2 ** T * n) * (A + 1);
+  const key = `Make Rabbits (Offspring #${n})`;
+
+  // 🐇 grammatical helpers
+  const hareWord = totalHares === 1 ? "Hare" : "Hares";
+  const hareTokenWord = hares === 1 ? "token" : "tokens";
+  const rabbitWord = rabbits === 1 ? "Rabbit" : "Rabbits";
+  const triggerWord = totalMake === 1 ? "trigger" : "triggers";
+  const trigPlural = trigs === 1 ? "" : "s";
+
+  nar += `<p class="section-heading">Offspring Trigger #${n} Resolves</p>
+  <ul>
+    <li><strong>${hares}</strong> 1/1 white <em>Hare Apparent</em> ${hareTokenWord} ${hares > 1 ? "enter the battlefield simultaneously" : "enters the battlefield"}.</li>
+    <li>Each Hare makes <strong>${trigs}</strong> Make Rabbits trigger${trigs === 1 ? "" : "s"}, for <strong>${totalMake}</strong> total Make Rabbits trigger${totalMake === 1 ? "" : "s"} placed on top of the stack.</li>
+
+  </ul>`;
+
+  nar += `<div class="stack-update">➕ <strong>${totalMake}</strong>× Make Rabbits (Offspring #${n}) added to the stack</div>`;
+  stack[key] = totalMake;
+  nar += buildStackDisplay(stack);
+
+  nar += `<p class="section-heading">Make Rabbits (Offspring #${n}) Trigger Resolves</p>
+  <ul>
+    <li>Each Hare makes <strong>${perHare}</strong> Rabbit${perHare > 1 ? "s" : ""} per Hare it sees.</li>
+    <li>Each Hare sees <strong>${totalHares}</strong> ${hareWord} on the battlefield making a total of <strong>${perHare * totalHares}</strong> ${rabbitWord} per trigger of Make Rabbits.</li>
+    <li><strong>${totalMake}</strong> total Make Rabbits ${triggerWord} resolve sequentially resulting in <strong>${rabbits.toLocaleString()}</strong> 1/1 white Rabbit token${rabbits > 1 ? "s" : ""}.</li>
+  </ul>`;
+
+  delete stack[key];
+  nar += buildStackDisplay(stack);
+}
+
 
 // 🏁 FINAL RESOLUTION SECTION
 // Calculate total hares after all offspring triggers
 const finalHares = H + (3 ** O * 2 ** T) * (A + 1);
+const hareWord = finalHares === 1 ? "Hare" : "Hares";
+const rabbitWord = (perHare * finalHares) === 1 ? "Rabbit" : "Rabbits";
+const triggerWord = (A + 1) === 1 ? "trigger" : "triggers";
+const totalExtraRabbits = (A + 1) * perHare * finalHares;
 
 nar += `<p class="section-heading">Final Resolution</p>
 <ul>
-  <li>After all Offspring triggers resolve, the remaining Make Rabbits triggers from the original Hare resolve last.</li>
-  <li>Each of these triggers sees <strong>${finalHares}</strong> Hares on the battlefield and makes <strong>${perHare * finalHares}</strong> Rabbits per trigger.</li>
-  <li>With <strong>${A + 1}</strong> total Make Rabbits triggers remaining from the original Hare, that results in <strong>${(A + 1) * perHare * finalHares}</strong> additional 1/1 white Rabbit token${((A + 1) * perHare * finalHares) > 1 ? "s" : ""}.</li>
+  <li>After all Offspring ${triggerWord} resolve, the remaining Make Rabbits ${triggerWord} from the original Hare resolve last.</li>
+  <li>Each of these ${triggerWord} sees <strong>${finalHares}</strong> ${hareWord} on the battlefield and makes <strong>${perHare * finalHares}</strong> ${rabbitWord} per ${triggerWord.slice(0, -1)}.</li>
+  <li>With <strong>${A + 1}</strong> total Make Rabbits ${triggerWord} remaining from the original Hare, that results in <strong>${totalExtraRabbits}</strong> additional 1/1 white Rabbit token${totalExtraRabbits === 1 ? "" : "s"}.</li>
 </ul>`;
 
 // ⚡ No stack box display for original — skip showing it entirely now
@@ -467,7 +488,7 @@ nar += `<p class="section-heading">Final Board State</p>
   <ul>
     <li>1 regular 2/2 <em>Hare Apparent</em></li>
     <li><strong>${(A + 1) * (3 ** O * 2 ** T)}</strong> 1/1 <em>Hare Apparent</em> token${(A + 1) * (3 ** O * 2 ** T) > 1 ? "s" : ""}</li>
-    <li><strong>${total.toLocaleString()}</strong> 1/1 Rabbit token${total > 1 ? "s" : ""}${R > 0 ? ` (including existing ${R} Rabbits → <strong>${grand.toLocaleString()}</strong> total)` : ""}</li>
+    <li><strong>${total.toLocaleString()}</strong> 1/1 Rabbit token${total > 1 ? "s" : ""}${R > 0 ? ` (including existing ${R} Rabbit${R === 1 ? "" : "s"} → <strong>${grand.toLocaleString()}</strong> total)` : ""}</li>
   </ul>
 </ul>`;
 
