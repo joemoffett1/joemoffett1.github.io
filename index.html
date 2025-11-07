@@ -341,26 +341,28 @@ footer {
     <p><strong>O</strong> — Number of <em>token triplers</em> such as Ojer Taq, Deepest Foundation.</p>
     <p><strong>A</strong> — Number of <em>additional trigger</em> effects such as Panharmonicon.</p>
     <p><strong>R</strong> — Number of <em>existing Rabbit tokens</em> already on the battlefield.</p>
-    <div style="text-align:center;margin:10px 0; font-size:0.88em; overflow-x:auto;">
-      $$
-      X(H,T,A,O)=
-      \left[
-        \sum_{n=1}^{A+1}
-          \Bigl(
-            (3^{O}\cdot2^{T})^{2}
-            (H + 3^{O}\cdot2^{T} n)
-            (A+1)
-          \Bigr)
-      \right]
-      +
-      \Bigl(
-        3^{O}\cdot2^{T}
-        (H + 3^{O}\cdot2^{T}(A+1))
-        (A+1)
-      \Bigr)
-      $$
-    </div>
-    <p id="rabbitsPerHare"><strong>Each Hare makes:</strong> 1 Rabbit per Hare it sees.</p>
+<div style="text-align:center;margin:10px 0; font-size:0.88em; overflow-x:auto;">
+  $$
+  X(H,T,A,O)=
+  \Biggl\lbrace
+    \Biggl(
+      \sum_{n=1}^{A+1}
+        \left(
+          (3^{O}\cdot2^{T})^{2}\cdot
+          \bigl(H+3^{O}\cdot2^{T}\cdot n\bigr)\cdot
+          (A+1)
+        \right)
+    \Biggr)
+    +
+    \Bigl(
+      2^{T}\cdot
+      \bigl(H+3^{O}\cdot2^{T}(A+1)\bigr)\cdot
+      (A+1)
+    \Bigr)
+    + R
+  \Biggr\rbrace
+  $$
+</div>
   </div>
 
   <!-- ════════════ 🎨 ART & FOOTER ════════════ -->
