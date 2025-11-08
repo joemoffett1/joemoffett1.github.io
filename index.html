@@ -419,8 +419,6 @@ function resolveStack(){
   resultBox.innerHTML=`Rabbits created: ${total.toLocaleString()}${R>0?`<br><span style="font-size:1.1em;color:#725a2e;">🐰 Total rabbits now: ${grand.toLocaleString()}</span>`:""}`;
   setTimeout(()=>resultBox.style.opacity=1,150);
 
-  document.getElementById("rabbitsPerHare").innerHTML=`<strong>Each Hare makes:</strong> ${perHare} Rabbits per Hare it sees.`;
-
   let nar=`<p class="section-heading">Starting Conditions:</p>
   <ul>
     <li>Each token you create will create <strong>${perHare}</strong> times as many tokens (<em>3<sup>${O}</sup> × 2<sup>${T}</sup></em>).</li>
