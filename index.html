@@ -488,7 +488,10 @@ const totalExtraRabbits = (A + 1) * perHare * finalHares;
 nar += `<p class="section-heading">Final Resolution</p>
 <ul>
   <li>After all Offspring ${triggerWord} resolve, the remaining Make Rabbits ${triggerWord} from the original Hare resolve last.</li>
-  <li>Each of these ${triggerWord} sees <strong>${finalHares}</strong> ${hareWord} on the battlefield and makes <strong>${perHare * finalHares}</strong> ${rabbitWord} per ${triggerWord.slice(0, -1)}.</li>
+<li>
+  Each of these ${triggerWord} see${(A + 1) > 1 ? "" : "s"} <strong>${finalHares}</strong> ${hareWord} on the battlefield
+  and make${(A + 1) > 1 ? "" : "s"} <strong>${perHare * finalHares}</strong> ${rabbitWord} per ${triggerWord}.
+</li>
   <li>With <strong>${A + 1}</strong> total Make Rabbits ${triggerWord} remaining from the original Hare, that results in <strong>${totalExtraRabbits}</strong> additional 1/1 white Rabbit token${totalExtraRabbits === 1 ? "" : "s"}.</li>
 </ul>`;
 
