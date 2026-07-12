@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hare Apparent Offspring Rabbit Calculator 🪄</title>
+<meta name="description" content="Calculate exactly how many Rabbit tokens you make when you cast Hare Apparent paying its Offspring cost — with doublers, triplers, and Panharmonicon effects, plus a full stack-by-stack breakdown.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐇</text></svg>">
+<meta property="og:title" content="Hare Apparent Offspring Rabbit Calculator">
+<meta property="og:description" content="So you cast a Hare Apparent paying its Offspring cost... find out exactly how many Rabbits you just made.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://solveforhare.com/">
+<meta property="og:image" content="https://solveforhare.com/Hare.jpg">
 
 <!-- ══════════════════════════════════════════════ -->
 <!-- 🎨 FONT IMPORTS & BASE STYLES -->
@@ -336,7 +343,7 @@ footer {
   </div>
   <div class="slider-group">
     <label for="Rnum">🐰 Existing Rabbit Tokens (R):</label>
-    <input id="Rnum" type="number" value="0" min="0">
+    <input id="Rnum" type="number" value="0" min="0" oninput="updateResult()">
   </div>
 
   <div id="result">Rabbits created: —</div>
@@ -365,7 +372,7 @@ footer {
     \Biggr)
     +
     \Bigl(
-      2^{T}\cdot
+      3^{O}\cdot2^{T}\cdot
       \bigl(H+3^{O}\cdot2^{T}(A+1)\bigr)\cdot
       (A+1)
     \Bigr)
@@ -377,16 +384,16 @@ footer {
 
   <!-- ════════════ 🎨 ART & FOOTER ════════════ -->
   <div class="art-row">
-    <img src="./zinnia.jpg" alt="Zinnia, Valley’s Voice">
-    <img src="./Hare.jpg" alt="Hare Apparent">
+    <img src="./zinnia.jpg" alt="Zinnia, Valley’s Voice" loading="lazy">
+    <img src="./Hare.jpg" alt="Hare Apparent" loading="lazy">
   </div>
   <div class="art-row">
-    <img src="./rabbit.jpg" alt="Rabbit Token">
-    <img src="./pan.jpg" alt="Panharmonicon">
+    <img src="./rabbit.jpg" alt="Rabbit Token" loading="lazy">
+    <img src="./pan.jpg" alt="Panharmonicon" loading="lazy">
   </div>
   <div class="art-row">
-    <img src="./proc.jpg" alt="Anointed Procession">    
-    <img src="./ojer.jpg" alt="Ojer Taq, Deepest Foundation">
+    <img src="./proc.jpg" alt="Anointed Procession" loading="lazy">
+    <img src="./ojer.jpg" alt="Ojer Taq, Deepest Foundation" loading="lazy">
   </div>
 
 
@@ -402,15 +409,33 @@ function X(H,T,A,O){
   let term2=(3**O*2**T)*(H+3**O*2**T*(A+1))*(A+1);
   return {term1,term2,total:term1+term2};
 }
-function syncInputs(id){document.getElementById(id+"num").value=document.getElementById(id).value;}
-function syncSliders(id){let s=document.getElementById(id),n=document.getElementById(id+"num");n.value=Math.min(Math.max(parseFloat(n.value),s.min),s.max);s.value=n.value;}
+function syncInputs(id){document.getElementById(id+"num").value=document.getElementById(id).value;updateResult();}
+function syncSliders(id){
+  let s=document.getElementById(id),n=document.getElementById(id+"num");
+  const v=parseInt(n.value,10);
+  if(Number.isNaN(v))return; // field is mid-edit (empty) — leave the slider where it was
+  n.value=Math.min(Math.max(v,+s.min),+s.max);
+  s.value=n.value;
+  updateResult();
+}
+function readInputs(){
+  const H=+document.getElementById('H').value,T=+document.getElementById('T').value,
+        A=+document.getElementById('A').value,O=+document.getElementById('O').value,
+        R=Math.max(0,parseInt(document.getElementById('Rnum').value,10)||0);
+  return {H,T,A,O,R};
+}
+function updateResult(){
+  const {H,T,A,O,R}=readInputs();
+  const {total}=X(H,T,A,O),grand=total+R;
+  document.getElementById("result").innerHTML=`Rabbits created: ${total.toLocaleString()}${R>0?`<br><span style="font-size:1.1em;color:#725a2e;">🐰 Total rabbits now: ${grand.toLocaleString()}</span>`:""}`;
+}
 function buildStackDisplay(groups){const keys=Object.keys(groups).filter(k=>groups[k]>0);if(!keys.length)return"";let html='<div class="stack-line">';for(let i=0;i<keys.length;i++){html+=`<div class="stack-box"><strong>${groups[keys[i]]}</strong>× ${keys[i]}</div>`;if(i<keys.length-1)html+='<div class="stack-arrow">←</div>'; }html+='</div>';return html;}
 
 function resolveStack(){
   const btn=document.getElementById("resolveBtn");
   btn.textContent="Resolving...";btn.classList.add("resolving");
 
-  const H=+document.getElementById('H').value,T=+document.getElementById('T').value,A=+document.getElementById('A').value,O=+document.getElementById('O').value,R=+document.getElementById('Rnum').value||0;
+  const {H,T,A,O,R}=readInputs();
   const {term1,term2,total}=X(H,T,A,O),grand=total+R;
   const perHare=3**O*2**T;
 
@@ -421,7 +446,7 @@ function resolveStack(){
 
   let nar=`<p class="section-heading">Starting Conditions:</p>
   <ul>
-    <li>Each token you create will create <strong>${perHare}</strong> times as many tokens (<em>3<sup>${O}</sup> × 2<sup>${T}</sup></em>).</li>
+    <li>${perHare === 1 ? "Each token-creating effect creates its normal number of tokens (no doublers or triplers)." : `Each token you create will create <strong>${perHare}</strong> times as many tokens (<em>3<sup>${O}</sup> × 2<sup>${T}</sup></em>).`}</li>
     <li>Each Enter the Battlefield trigger will trigger <strong>${A+1}</strong> time${A+1 > 1 ? "s" : ""}.</li>
     <li>You start with <strong>${H}</strong> <em>Hare Apparents</em> and <strong>${R}</strong> Rabbit tokens on the battlefield.</li>
   </ul>`;
@@ -497,12 +522,13 @@ nar += `<p class="section-heading">Final Resolution</p>
 
 nar += `<p class="section-heading">Final Board State</p>
 <ul>
-  <li>When the stack fully resolves, you control:</li>
-  <ul>
-    <li>1 regular 2/2 <em>Hare Apparent</em></li>
-    <li><strong>${(A + 1) * (3 ** O * 2 ** T)}</strong> 1/1 <em>Hare Apparent</em> token${(A + 1) * (3 ** O * 2 ** T) > 1 ? "s" : ""}</li>
-    <li><strong>${total.toLocaleString()}</strong> 1/1 Rabbit token${total > 1 ? "s" : ""}${R > 0 ? ` (including existing ${R} Rabbit${R === 1 ? "" : "s"} → <strong>${grand.toLocaleString()}</strong> total)` : ""}</li>
-  </ul>
+  <li>When the stack fully resolves, you control:
+    <ul>
+      <li>1 regular 2/2 <em>Hare Apparent</em></li>
+      <li><strong>${(A + 1) * (3 ** O * 2 ** T)}</strong> 1/1 <em>Hare Apparent</em> token${(A + 1) * (3 ** O * 2 ** T) > 1 ? "s" : ""}</li>
+      <li><strong>${total.toLocaleString()}</strong> 1/1 Rabbit token${total > 1 ? "s" : ""}${R > 0 ? ` (including existing ${R} Rabbit${R === 1 ? "" : "s"} → <strong>${grand.toLocaleString()}</strong> total)` : ""}</li>
+    </ul>
+  </li>
 </ul>`;
 
 
@@ -511,7 +537,7 @@ nar += `<p class="section-heading">Final Board State</p>
 
   // ✅ FIXED ANIMATION + MATHJAX SYNC
   if (window.MathJax && window.MathJax.typesetPromise) {
-    window.MathJax.typesetPromise().then(() => {
+    window.MathJax.typesetPromise().catch(() => {}).finally(() => {
       const narrativeBox = document.getElementById("narrative");
       narrativeBox.classList.add("show-scroll");
       btn.textContent = "Resolve";
@@ -537,7 +563,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (input.value === "0") input.value = "";
     });
     input.addEventListener("blur", () => {
-      if (input.value.trim() === "") input.value = "0";
+      if (input.value.trim() === "") {
+        input.value = "0";
+        if (input.id.endsWith("num") && input.id !== "Rnum") syncSliders(input.id.slice(0, -3));
+        updateResult();
+      }
     });
   });
 });
