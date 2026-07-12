@@ -402,11 +402,14 @@ footer {
 
 <!-- ⚙️ JAVASCRIPT -->
 <script>
+// BigInt throughout — token counts overflow Number.MAX_SAFE_INTEGER at high T/O/A
 function X(H,T,A,O){
-  let term1=0;
-  for(let n=1;n<=A+1;n++)
-    term1+=((3**O*2**T)**2)*(H+3**O*2**T*n)*(A+1);
-  let term2=(3**O*2**T)*(H+3**O*2**T*(A+1))*(A+1);
+  H=BigInt(H);T=BigInt(T);A=BigInt(A);O=BigInt(O);
+  const per=3n**O*2n**T;
+  let term1=0n;
+  for(let n=1n;n<=A+1n;n++)
+    term1+=per**2n*(H+per*n)*(A+1n);
+  const term2=per*(H+per*(A+1n))*(A+1n);
   return {term1,term2,total:term1+term2};
 }
 function syncInputs(id){document.getElementById(id+"num").value=document.getElementById(id).value;updateResult();}
@@ -426,18 +429,18 @@ function readInputs(){
 }
 function updateResult(){
   const {H,T,A,O,R}=readInputs();
-  const {total}=X(H,T,A,O),grand=total+R;
+  const {total}=X(H,T,A,O),grand=total+BigInt(R);
   document.getElementById("result").innerHTML=`Rabbits created: ${total.toLocaleString()}${R>0?`<br><span style="font-size:1.1em;color:#725a2e;">🐰 Total rabbits now: ${grand.toLocaleString()}</span>`:""}`;
 }
-function buildStackDisplay(groups){const keys=Object.keys(groups).filter(k=>groups[k]>0);if(!keys.length)return"";let html='<div class="stack-line">';for(let i=0;i<keys.length;i++){html+=`<div class="stack-box"><strong>${groups[keys[i]]}</strong>× ${keys[i]}</div>`;if(i<keys.length-1)html+='<div class="stack-arrow">←</div>'; }html+='</div>';return html;}
+function buildStackDisplay(groups){const keys=Object.keys(groups).filter(k=>groups[k]>0);if(!keys.length)return"";let html='<div class="stack-line">';for(let i=0;i<keys.length;i++){html+=`<div class="stack-box"><strong>${groups[keys[i]].toLocaleString()}</strong>× ${keys[i]}</div>`;if(i<keys.length-1)html+='<div class="stack-arrow">←</div>'; }html+='</div>';return html;}
 
 function resolveStack(){
   const btn=document.getElementById("resolveBtn");
   btn.textContent="Resolving...";btn.classList.add("resolving");
 
   const {H,T,A,O,R}=readInputs();
-  const {term1,term2,total}=X(H,T,A,O),grand=total+R;
-  const perHare=3**O*2**T;
+  const {term1,term2,total}=X(H,T,A,O),grand=total+BigInt(R);
+  const perHare=3n**BigInt(O)*2n**BigInt(T);
 
   const resultBox=document.getElementById("result");
   resultBox.style.opacity=0;
@@ -446,7 +449,7 @@ function resolveStack(){
 
   let nar=`<p class="section-heading">Starting Conditions:</p>
   <ul>
-    <li>${perHare === 1 ? "Each token-creating effect creates its normal number of tokens (no doublers or triplers)." : `Each token you create will create <strong>${perHare}</strong> times as many tokens (<em>3<sup>${O}</sup> × 2<sup>${T}</sup></em>).`}</li>
+    <li>${perHare === 1n ? "Each token-creating effect creates its normal number of tokens (no doublers or triplers)." : `Each token you create will create <strong>${perHare.toLocaleString()}</strong> times as many tokens (<em>3<sup>${O}</sup> × 2<sup>${T}</sup></em>).`}</li>
     <li>Each Enter the Battlefield trigger will trigger <strong>${A+1}</strong> time${A+1 > 1 ? "s" : ""}.</li>
     <li>You start with <strong>${H}</strong> <em>Hare Apparents</em> and <strong>${R}</strong> Rabbit tokens on the battlefield.</li>
   </ul>`;
@@ -463,36 +466,35 @@ function resolveStack(){
   stack["Offspring"] -= 1;
   if (stack["Offspring"] <= 0) delete stack["Offspring"];
 
-  const hares = 3 ** O * 2 ** T;
+  const hares = perHare;
   const trigs = A + 1;
-  const totalMake = hares * trigs;
-  const totalHares = H + 3 ** O * 2 ** T * n;
-  const rabbits = ((3 ** O * 2 ** T) ** 2) * (H + 3 ** O * 2 ** T * n) * (A + 1);
+  const totalMake = hares * BigInt(trigs);
+  const totalHares = BigInt(H) + perHare * BigInt(n);
+  const rabbits = perHare ** 2n * totalHares * BigInt(A + 1);
   const key = `Make Rabbits (Offspring #${n})`;
 
-  // 🐇 grammatical helpers
-  const hareWord = totalHares === 1 ? "Hare" : "Hares";
-  const hareTokenWord = hares === 1 ? "token" : "tokens";
-  const rabbitWord = rabbits === 1 ? "Rabbit" : "Rabbits";
-  const triggerWord = totalMake === 1 ? "trigger" : "triggers";
-  const trigPlural = trigs === 1 ? "" : "s";
+  // 🐇 grammatical helpers (BigInt values compare against 1n)
+  const hareWord = totalHares === 1n ? "Hare" : "Hares";
+  const hareTokenWord = hares === 1n ? "token" : "tokens";
+  const rabbitWord = rabbits === 1n ? "Rabbit" : "Rabbits";
+  const triggerWord = totalMake === 1n ? "trigger" : "triggers";
 
   nar += `<p class="section-heading">Offspring Trigger #${n} Resolves</p>
   <ul>
-    <li><strong>${hares}</strong> 1/1 white <em>Hare Apparent</em> ${hareTokenWord} ${hares > 1 ? "enter the battlefield simultaneously" : "enters the battlefield"}.</li>
-    <li>Each Hare makes <strong>${trigs}</strong> Make Rabbits trigger${trigs === 1 ? "" : "s"}, for <strong>${totalMake}</strong> total Make Rabbits trigger${totalMake === 1 ? "" : "s"} placed on top of the stack.</li>
+    <li><strong>${hares.toLocaleString()}</strong> 1/1 white <em>Hare Apparent</em> ${hareTokenWord} ${hares > 1 ? "enter the battlefield simultaneously" : "enters the battlefield"}.</li>
+    <li>Each Hare makes <strong>${trigs}</strong> Make Rabbits trigger${trigs === 1 ? "" : "s"}, for <strong>${totalMake.toLocaleString()}</strong> total Make Rabbits trigger${totalMake === 1n ? "" : "s"} placed on top of the stack.</li>
 
   </ul>`;
 
-  nar += `<div class="stack-update">➕ <strong>${totalMake}</strong>× Make Rabbits (Offspring #${n}) added to the stack</div>`;
+  nar += `<div class="stack-update">➕ <strong>${totalMake.toLocaleString()}</strong>× Make Rabbits (Offspring #${n}) added to the stack</div>`;
   stack[key] = totalMake;
   nar += buildStackDisplay(stack);
 
   nar += `<p class="section-heading">Make Rabbits (Offspring #${n}) Trigger Resolves</p>
   <ul>
-    <li>Each Hare makes <strong>${perHare}</strong> Rabbit${perHare > 1 ? "s" : ""} per Hare it sees.</li>
-    <li>Each Hare sees <strong>${totalHares}</strong> ${hareWord} on the battlefield making a total of <strong>${perHare * totalHares}</strong> ${rabbitWord} per trigger of Make Rabbits.</li>
-    <li><strong>${totalMake}</strong> total Make Rabbits ${triggerWord} resolve sequentially resulting in <strong>${rabbits.toLocaleString()}</strong> 1/1 white Rabbit token${rabbits > 1 ? "s" : ""}.</li>
+    <li>Each Hare makes <strong>${perHare.toLocaleString()}</strong> Rabbit${perHare > 1 ? "s" : ""} per Hare it sees.</li>
+    <li>Each Hare sees <strong>${totalHares.toLocaleString()}</strong> ${hareWord} on the battlefield making a total of <strong>${(perHare * totalHares).toLocaleString()}</strong> ${rabbitWord} per trigger of Make Rabbits.</li>
+    <li><strong>${totalMake.toLocaleString()}</strong> total Make Rabbits ${triggerWord} resolve sequentially resulting in <strong>${rabbits.toLocaleString()}</strong> 1/1 white Rabbit token${rabbits > 1 ? "s" : ""}.</li>
   </ul>`;
 
   delete stack[key];
@@ -502,30 +504,31 @@ function resolveStack(){
 
 // 🏁 FINAL RESOLUTION SECTION
 // Calculate total hares after all offspring triggers
-const finalHares = H + (3 ** O * 2 ** T) * (A + 1);
-const hareWord = finalHares === 1 ? "Hare" : "Hares";
-const rabbitWord = (perHare * finalHares) === 1 ? "Rabbit" : "Rabbits";
+const finalHares = BigInt(H) + perHare * BigInt(A + 1);
+const hareWord = finalHares === 1n ? "Hare" : "Hares";
+const rabbitWord = (perHare * finalHares) === 1n ? "Rabbit" : "Rabbits";
 const triggerWord = (A + 1) === 1 ? "trigger" : "triggers";
-const totalExtraRabbits = (A + 1) * perHare * finalHares;
+const totalExtraRabbits = BigInt(A + 1) * perHare * finalHares;
 
 nar += `<p class="section-heading">Final Resolution</p>
 <ul>
   <li>After all Offspring ${triggerWord} resolve, the remaining Make Rabbits ${triggerWord} from the original Hare resolve last.</li>
 <li>
-  Each of these ${triggerWord} see${(A + 1) > 1 ? "" : "s"} <strong>${finalHares}</strong> ${hareWord} on the battlefield
-  and make${(A + 1) > 1 ? "" : "s"} <strong>${perHare * finalHares}</strong> ${rabbitWord} per ${triggerWord}.
+  Each of these ${triggerWord} see${(A + 1) > 1 ? "" : "s"} <strong>${finalHares.toLocaleString()}</strong> ${hareWord} on the battlefield
+  and make${(A + 1) > 1 ? "" : "s"} <strong>${(perHare * finalHares).toLocaleString()}</strong> ${rabbitWord} per ${triggerWord}.
 </li>
-  <li>With <strong>${A + 1}</strong> total Make Rabbits ${triggerWord} remaining from the original Hare, that results in <strong>${totalExtraRabbits}</strong> additional 1/1 white Rabbit token${totalExtraRabbits === 1 ? "" : "s"}.</li>
+  <li>With <strong>${A + 1}</strong> total Make Rabbits ${triggerWord} remaining from the original Hare, that results in <strong>${totalExtraRabbits.toLocaleString()}</strong> additional 1/1 white Rabbit token${totalExtraRabbits === 1n ? "" : "s"}.</li>
 </ul>`;
 
 // ⚡ No stack box display for original — skip showing it entirely now
 
+const hareTokens = BigInt(A + 1) * perHare;
 nar += `<p class="section-heading">Final Board State</p>
 <ul>
   <li>When the stack fully resolves, you control:
     <ul>
       <li>1 regular 2/2 <em>Hare Apparent</em></li>
-      <li><strong>${(A + 1) * (3 ** O * 2 ** T)}</strong> 1/1 <em>Hare Apparent</em> token${(A + 1) * (3 ** O * 2 ** T) > 1 ? "s" : ""}</li>
+      <li><strong>${hareTokens.toLocaleString()}</strong> 1/1 <em>Hare Apparent</em> token${hareTokens > 1 ? "s" : ""}</li>
       <li><strong>${total.toLocaleString()}</strong> 1/1 Rabbit token${total > 1 ? "s" : ""}${R > 0 ? ` (including existing ${R} Rabbit${R === 1 ? "" : "s"} → <strong>${grand.toLocaleString()}</strong> total)` : ""}</li>
     </ul>
   </li>
